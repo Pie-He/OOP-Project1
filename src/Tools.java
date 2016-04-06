@@ -8,10 +8,12 @@ import com.alibaba.fastjson.*;
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-		String a = "aadsafagadsf";
+		/*String a = "aadsafagadsf";
 		char[] b = a.toCharArray();
 		Player t = new Player("hpj", "»À", "µÿ");
 		String str = JSON.toJSON(t).toString();
+		JSONObject j=JSON.parseObject(str);
+		System.out.print(j.get("name"));
 		System.out.println(JSON.toJSON(b));
 		System.out.println(str);
 		File file = new File("test.txt");
@@ -30,7 +32,8 @@ public class Tools {
 
 			br.close();
 		}
-		//writeMap();
+		//writeMap();*/
+		
 	}
 
 	public static void writeMap() throws IOException {
