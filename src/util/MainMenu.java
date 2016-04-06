@@ -18,7 +18,7 @@ public class MainMenu {
 		case 5:
 			
 		case 6:
-			
+			Manager.map.printMap();
 		case 7:
 		
 		}

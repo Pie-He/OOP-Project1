@@ -10,5 +10,5 @@ public class Manager {
 	/*static{
 		player.stream().filter(item->(item.getCash()==10000)).findFirst();
 	}*/
-	public static Place[] place;
+	public static Map map=new Map(39,19);
 }

@@ -8,14 +8,8 @@ import com.alibaba.fastjson.*;
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-		/*String a = "aadsafagadsf";
+		String a = "aadsafagadsf";
 		char[] b = a.toCharArray();
-		Player t = new Player("hpj", "人", "地");
-		String str = JSON.toJSON(t).toString();
-		JSONObject j=JSON.parseObject(str);
-		System.out.print(j.get("name"));
-		System.out.println(JSON.toJSON(b));
-		System.out.println(str);
 		File file = new File("test.txt");
 		System.out.println(file.exists());
 		if (file.exists()) {
@@ -32,8 +26,12 @@ public class Tools {
 
 			br.close();
 		}
-		//writeMap();*/
-		
+		writeMap();
+		/*Player t = new Player("hpj", "人", "地");
+		String str = JSON.toJSON(t).toString();
+		JSONObject jo = JSON.parseObject(str);
+		Player a=JSON.toJavaObject(jo, Player.class);
+		System.out.print((int)jo.get("cash"));*/
 	}
 
 	public static void writeMap() throws IOException {
@@ -91,7 +89,7 @@ public class Tools {
 
 			places[60] = new House(6, 10, "◎");
 			for (int i = 61; i <= 64; i++) {
-				places[i] = new House(4, 2 * i - 112, "◎");
+				places[i] = new House(4, -2 * i + 132, "◎");
 			}
 
 			for (int i = 24; i <= 27; i++) {
@@ -99,7 +97,7 @@ public class Tools {
 			}
 			places[28] = new Coupon(38, 2, "券");
 			for (int i = 30; i <= 33; i++) {
-				places[i] = new Coupon(2 * i - 54, 38, "券");
+				places[i] = new Coupon(38, 2 * i - 54, "券");
 			}
 			places[34] = new Coupon(36, 12, "券");
 			places[66] = new Coupon(0, 4, "券");

@@ -2,7 +2,7 @@ package type;
 
 import java.util.*;
 
-public class Player {
+public class Player implements Item{
 	private String name;
 	private String symbol;
 	private int cash;//Íæ¼ÒÏÖ½ğ
