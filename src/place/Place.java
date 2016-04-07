@@ -3,12 +3,14 @@ package place;
 import java.util.*;
 
 import type.Item;
+import type.RoadBlock;
 
 public abstract class Place {
 	private int x;
 	private int y;
 	private String symbol;
-	private LinkedList<Item> items=new LinkedList<Item>();
+	private LinkedList<Item> items = new LinkedList<Item>();
+
 	Place() {
 
 	}
@@ -22,16 +24,19 @@ public abstract class Place {
 	public int getX() {
 		return x;
 	}
-	public void setX(int x){
-		this.x=x;
+
+	public void setX(int x) {
+		this.x = x;
 	}
+
 	public int getY() {
 		return y;
 	}
-	
-	public void setY(int y){
-		this.y=y;
+
+	public void setY(int y) {
+		this.y = y;
 	}
+
 	public String getSymbol() {
 		return symbol;
 	}
@@ -41,8 +46,17 @@ public abstract class Place {
 	}
 
 	public String toTextual() {
-		// TODO Auto-generated method stub
-		return items.size()==0?this.symbol:items.getLast().getSymbol();
+		/*
+		 * if(items.isEmpty()||(items.size()==1&&items.getFirst() instanceof
+		 * RoadBlock)) return this.symbol; Item it=items.getFirst(); if(it
+		 * instanceof RoadBlock) it=items.get(1);
+		 */
+		//Item i = items.stream().filter(item -> (item instanceof RoadBlock))
+			//	.findFirst().orElse(null);
+		return items.stream()
+				.filter(item -> !(item instanceof RoadBlock))
+				.map(item -> item.getSymbol()).findFirst().orElse(this.symbol);
+		//return symbol;
 	}
 
 }

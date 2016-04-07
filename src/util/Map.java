@@ -15,13 +15,6 @@ public class Map {
 
 	public Map(int weight, int height) {
 		this.cells = new Cell[weight][height];
-		/*for (int x = 0; x < cells.length; x++) {
-			cells[x]=new Cell[height];
-			for (int y = 0; y <cells[x].length; y++) {
-				//System.out.println(x+" "+y);
-				cells[x][y]=new Cell(x,y,null);
-			}
-		}*/
 		places=new Place[68];
 		getMapData();
 	}
@@ -35,9 +28,7 @@ public class Map {
 				int i = 0;
 				while ((str = br.readLine()) != null) {
 					JSONObject jo = JSON.parseObject(str);
-					//System.out.println(jo.get("x")+" "+jo.get("y"));
 					places[i] = getRealInstance(jo);
-					//System.out.println(places[i].getX()+" "+places[i].getY());
 					i++;
 				}
 				br.close();
@@ -45,7 +36,6 @@ public class Map {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 	}
 
@@ -55,16 +45,12 @@ public class Map {
 				int x = places[i].getX();
 				int y = places[i].getY();
 				cells[x][y] = new Cell(x, y, places[i]);
-				System.out.println(x+" "+y);
 			}
-			System.out.println();
 		}
 		
 		String[][] map = new String[cells.length][cells[0].length];
 		for (int x = 0; x < map.length; x++) {
-			//map[x]=new String[cells[x].length];
 			for (int y = 0; y < map[x].length; y++) {
-				//System.out.println(x+" "+y);
 				map[x][y] = (cells[x][y]==null?"¡¡":cells[x][y].toTextual());
 			}
 		}
@@ -107,17 +93,9 @@ public class Map {
 			this.y = y;
 			this.place = place;
 		}
-
+		
 		String toTextual() {
-			return place==null?"¡¡":place.toTextual();
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public int getY() {
-			return y;
+			return place.toTextual();
 		}
 
 	}
