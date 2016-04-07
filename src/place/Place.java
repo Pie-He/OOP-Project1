@@ -2,14 +2,14 @@ package place;
 
 import java.util.*;
 
-import type.Item;
+import type.*;
 import type.RoadBlock;
 
 public abstract class Place {
 	private int x;
 	private int y;
 	private String symbol;
-	private LinkedList<Item> items = new LinkedList<Item>();
+	private PriorityQueue<Removable> items = new PriorityQueue<Removable>();
 
 	Place() {
 
@@ -45,18 +45,18 @@ public abstract class Place {
 		this.symbol = symbol;
 	}
 
-	public String toTextual() {
+	public String toText() {
 		/*
 		 * if(items.isEmpty()||(items.size()==1&&items.getFirst() instanceof
 		 * RoadBlock)) return this.symbol; Item it=items.getFirst(); if(it
 		 * instanceof RoadBlock) it=items.get(1);
 		 */
-		//Item i = items.stream().filter(item -> (item instanceof RoadBlock))
-			//	.findFirst().orElse(null);
-		return items.stream()
-				.filter(item -> !(item instanceof RoadBlock))
-				.map(item -> item.getSymbol()).findFirst().orElse(this.symbol);
-		//return symbol;
+		// Item i = items.stream().filter(item -> (item instanceof RoadBlock))
+		// .findFirst().orElse(null);
+		// return items.stream().filter(item -> !(item instanceof RoadBlock))
+		// .map(item -> item.getSymbol()).findFirst().orElse(this.symbol);
+		return items.stream().map(item -> item.getSymbol())
+				.filter(item -> item != null).findFirst().orElse(this.symbol);
+		// return symbol;
 	}
-
 }

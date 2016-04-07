@@ -12,11 +12,13 @@ public class Map {
 
 	private Cell[][] cells;
 	private Place[] places;
-
+	private String[][] staticMap;
 	public Map(int weight, int height) {
 		this.cells = new Cell[weight][height];
+		this.staticMap=new String[weight][height];
 		places=new Place[68];
 		getMapData();
+		this.initial();
 	}
 
 	private void getMapData() {
@@ -39,24 +41,34 @@ public class Map {
 		}
 	}
 
-	public void printMap() {
-		if (cells[0][0] == null) {
-			for (int i = 0; i < places.length; i++) {
-				int x = places[i].getX();
-				int y = places[i].getY();
-				cells[x][y] = new Cell(x, y, places[i]);
+	private void initial(){
+		for (int i = 0; i < places.length; i++) {
+			int x = places[i].getX();
+			int y = places[i].getY();
+			cells[x][y] = new Cell(x, y, places[i]);
+		}
+		for (int x = 0; x < staticMap.length; x++) {
+			for (int y = 0; y < staticMap[x].length; y++) {
+				staticMap[x][y] = (cells[x][y]==null?"　":cells[x][y].toText());
+
 			}
 		}
-		
+	}
+	public String[][] toText() {
 		String[][] map = new String[cells.length][cells[0].length];
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[x].length; y++) {
-				map[x][y] = (cells[x][y]==null?"　":cells[x][y].toTextual());
+				map[x][y] = (cells[x][y]==null?"　":cells[x][y].toText());
+				//=(cells[x][y]==null?"　":cells[x][y].toText());
 			}
 		}
-		Output.getMap(map);
+		return map;
 	}
 
+	public String[][] getInitalMap(){
+		return this.staticMap;
+	}
+	
 	private Place getRealInstance(JSONObject jo) {
 		String symbol = jo.get("symbol").toString();
 
@@ -94,8 +106,8 @@ public class Map {
 			this.place = place;
 		}
 		
-		String toTextual() {
-			return place.toTextual();
+		String toText() {
+			return place.toText();
 		}
 
 	}

@@ -52,10 +52,10 @@ public class Output {
 		}
 	}
 
-	public static void getMap(String[][] map) {
-		for (int y = 0; y < map[y].length; y++) {
-			for (int x = 0; x < map.length; x++) {
-				System.out.print(map[x][y]);
+	public static void printString(String[][] str) {
+		for (int y = 0; y < str[y].length; y++) {
+			for (int x = 0; x < str.length; x++) {
+				System.out.print(str[x][y]);
 			}
 			System.out.println();
 		}
@@ -82,4 +82,5 @@ public class Output {
 	public static void inputClose() {
 		input.close();
 	}
+
 }
