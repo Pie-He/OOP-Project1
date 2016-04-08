@@ -8,13 +8,14 @@ public class Player extends Removable {
 	private int deposit;// 玩家存款
 	private int coupon;// 玩家点券
 	private String hsSymbol;
-	private LinkedList prop;
+
+	private MyArray prop;
 
 	public Player() {
 		this.cash = 5000;
 		this.deposit = 0;
 		this.coupon = 0;
-		this.prop = new LinkedList();
+		this.prop = new MyArray(20);
 		// mov=new Removable();
 	}
 
@@ -60,5 +61,49 @@ public class Player extends Removable {
 
 	public void setCoupon(int plCoupon) {
 		this.coupon = plCoupon;
+	}
+
+	public String getHsSymbol() {
+		return hsSymbol;
+	}
+
+	public boolean addProp(Prop p){
+		return this.prop.add(p);
+	}
+	
+	public void removeProp(int index){
+		this.prop.remove(index);
+	}
+
+	public String propToText(){
+		StringBuffer str=new StringBuffer();
+		for(int i=0;i<this.prop.size();i++){
+			str.append(i+"-");
+			str.append(prop.get(i).toText());
+			str.append("  ");
+		}
+		return str.toString();
+	}
+	private class MyArray extends ArrayList<Prop> {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2525821341292125610L;
+		private int capacity;
+
+		MyArray(int capacity) {
+			this.capacity = capacity;
+		}
+
+		boolean isFull() {
+			return this.size() == capacity;
+		}
+
+		@Override
+		public boolean add(Prop p) {
+			return isFull() ? false : super.add(p);
+		}
+		
+		
 	}
 }

@@ -1,6 +1,7 @@
 import java.io.*;
 
 import type.Player;
+import type.Prop;
 import place.*;
 
 import com.alibaba.fastjson.*;
@@ -8,7 +9,9 @@ import com.alibaba.fastjson.*;
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-		String a = "aadsafagadsf";
+		Prop p=Prop.remoteBoson;
+		p.use();
+		/*String a = "aadsafagadsf";
 		char[] b = a.toCharArray();
 		File file = new File("test.txt");
 		System.out.println(file.exists());
@@ -26,7 +29,7 @@ public class Tools {
 
 			br.close();
 		}
-		writeMap();
+		writeMap();*/
 		/*Player t = new Player("hpj", "»À", "µÿ");
 		String str = JSON.toJSON(t).toString();
 		JSONObject jo = JSON.parseObject(str);
