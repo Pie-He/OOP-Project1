@@ -113,7 +113,7 @@ public class Tools {
 			places[29] = new Space(38, 4, "¿Õ");
 			places[35] = new Space(34, 12, "¿Õ");
 			places[41] = new Shop(28, 14, "µÀ");
-			places[47] = new Card(24, 18, "¿¨");
+			places[47] = new CardPrize(24, 18, "¿¨");
 			places[53] = new News(18, 12, "ÐÂ");
 			places[59] = new Bank(8, 10, "Òø");
 			places[65] = new Lottery(2, 4, "²Ê");

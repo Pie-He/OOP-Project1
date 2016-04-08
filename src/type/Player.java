@@ -75,14 +75,20 @@ public class Player extends Removable {
 		this.prop.remove(index);
 	}
 
-	public String propToText(){
+	public void useProp(int index){
+		
+	}
+	public ArrayList<String> propToText(){
 		StringBuffer str=new StringBuffer();
+		ArrayList<String> strs=new ArrayList<String>(20);
 		for(int i=0;i<this.prop.size();i++){
 			str.append(i+"-");
 			str.append(prop.get(i).toText());
 			str.append("  ");
+			strs.add(prop.get(i).toText());
 		}
-		return str.toString();
+		//return str.toString();
+		return strs;
 	}
 	private class MyArray extends ArrayList<Prop> {
 		/**
@@ -92,6 +98,7 @@ public class Player extends Removable {
 		private int capacity;
 
 		MyArray(int capacity) {
+			super(capacity);
 			this.capacity = capacity;
 		}
 

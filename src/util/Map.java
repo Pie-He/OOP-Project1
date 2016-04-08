@@ -3,6 +3,7 @@ package util;
 import java.io.*;
 
 import place.*;
+import type.PlaceEnum;
 import type.Player;
 
 import com.alibaba.fastjson.JSON;
@@ -71,8 +72,13 @@ public class Map {
 	
 	private Place getRealInstance(JSONObject jo) {
 		String symbol = jo.get("symbol").toString();
-
-		switch (symbol) {
+		for(PlaceEnum p:PlaceEnum.values()){
+			if(p.getSymbol().equals(symbol)){
+				return JSON.toJavaObject(jo, p.getRealClass());
+			}
+		}
+		return null;
+		/*switch (symbol) {
 		case "¡ò":
 			return JSON.toJavaObject(jo, House.class);
 		case "È¯":
@@ -88,10 +94,10 @@ public class Map {
 		case "¿Õ":
 			return JSON.toJavaObject(jo, Space.class);
 		case "¿¨":
-			return JSON.toJavaObject(jo, Card.class);
+			return JSON.toJavaObject(jo, CardPrize.class);
 		default:
 			return null;
-		}
+		}*/
 	}
 
 	private class Cell {

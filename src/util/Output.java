@@ -1,6 +1,8 @@
 package util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 import type.Player;
@@ -42,7 +44,30 @@ public class Output {
 
 	}
 
-	public static String getAndCheck(String regular) {
+	public static int getProp(ArrayList<String> strs){
+		for(int i=0;i<strs.size();i++){
+			System.out.printf("%d-%s  ",i,strs.get(i));
+		}
+		System.out.println();
+		String reg="^[0-"+(strs.size()-1)+"]$";
+		int choice=Integer.parseInt(getAndCheck("请输入数字表示选项", reg));
+		return choice;
+	}
+	
+
+	public static void printString(String str) {
+		System.out.println(str);
+	}
+	
+	public static void printStringArray2(String[][] str) {
+		for (int y = 0; y < str[y].length; y++) {
+			for (int x = 0; x < str.length; x++) {
+				System.out.print(str[x][y]);
+			}
+			System.out.println();
+		}
+	}
+	private static String getAndCheck(String regular) {
 		while (true) {
 			String inputStr = input.nextLine();
 			if (InputCheck.check(inputStr, regular)) {
@@ -51,16 +76,7 @@ public class Output {
 			System.out.println("输入错误");
 		}
 	}
-
-	public static void printString(String[][] str) {
-		for (int y = 0; y < str[y].length; y++) {
-			for (int x = 0; x < str.length; x++) {
-				System.out.print(str[x][y]);
-			}
-			System.out.println();
-		}
-	}
-
+	
 	private static String getAndCheck(String message, String regular) {
 		while (true) {
 			System.out.println(message);
