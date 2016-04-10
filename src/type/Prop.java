@@ -9,7 +9,7 @@ public enum Prop {
 		this.name = name;
 	}
 
-	public void use() {
+	public boolean use() {
 		switch (this) {
 		case roadBlock:
 		case remoteBoson:
@@ -21,6 +21,7 @@ public enum Prop {
 		default:
 			break;
 		}
+		return true;
 	}
 
 	public String toText() {

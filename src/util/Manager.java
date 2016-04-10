@@ -37,10 +37,11 @@ public class Manager {
 			Output.printStringArray2(map.getInitalMap());
 			break;
 		case 2:
-			Output.getProp(player.propToText());
+			int propChoice=Output.getProp(player.propToText());
+			player.useProp(propChoice);
 			break;
 		case 3:
-
+			
 		case 4:
 
 		case 5:

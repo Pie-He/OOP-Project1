@@ -67,29 +67,34 @@ public class Player extends Removable {
 		return hsSymbol;
 	}
 
-	public boolean addProp(Prop p){
+	public boolean addProp(Prop p) {
 		return this.prop.add(p);
 	}
-	
-	public void removeProp(int index){
+
+	public void removeProp(int index) {
 		this.prop.remove(index);
 	}
 
-	public void useProp(int index){
-		
+	public void useProp(int index) {
+		Prop p = prop.get(index);
+		if (p.use())
+			prop.remove(index);
+
 	}
-	public ArrayList<String> propToText(){
-		StringBuffer str=new StringBuffer();
-		ArrayList<String> strs=new ArrayList<String>(20);
-		for(int i=0;i<this.prop.size();i++){
-			str.append(i+"-");
+
+	public ArrayList<String> propToText() {
+		StringBuffer str = new StringBuffer();
+		ArrayList<String> strs = new ArrayList<String>(20);
+		for (int i = 0; i < this.prop.size(); i++) {
+			str.append(i + "-");
 			str.append(prop.get(i).toText());
 			str.append("  ");
 			strs.add(prop.get(i).toText());
 		}
-		//return str.toString();
+		// return str.toString();
 		return strs;
 	}
+
 	private class MyArray extends ArrayList<Prop> {
 		/**
 		 * 
@@ -110,7 +115,6 @@ public class Player extends Removable {
 		public boolean add(Prop p) {
 			return isFull() ? false : super.add(p);
 		}
-		
-		
+
 	}
 }
