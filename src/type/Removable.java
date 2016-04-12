@@ -3,7 +3,7 @@ package type;
 @SuppressWarnings("rawtypes")
 public class Removable implements Comparable{
 	private String symbol;
-	
+	private int poi;
 	@Override
 	public int compareTo(Object o) {
 		// TODO Auto-generated method stub
@@ -17,5 +17,11 @@ public class Removable implements Comparable{
 	
 	public String getSymbol(){
 		return symbol;
+	}
+	public int getPoi() {
+		return poi;
+	}
+	public void setPoi(int poi) {
+		this.poi = poi;
 	}
 }

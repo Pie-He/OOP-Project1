@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.*;
 
+import type.Manager;
 import type.Player;
 import util.*;
 

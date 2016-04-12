@@ -24,7 +24,7 @@ public class Output {
 			String name = getAndCheck("请输入玩家" + (i + 1) + "名字(数字、字母、下划线):",
 					"^\\w+$");
 			Player player = new Player(name, PLSYMBOL[i], HSSYMBOL[i]);
-			System.out.println(player.getDescription());
+			//System.out.println(player.getDescription());
 		}
 	}
 
@@ -44,21 +44,28 @@ public class Output {
 
 	}
 
-	public static int getProp(ArrayList<String> strs){
-		for(int i=0;i<strs.size();i++){
-			System.out.printf("%d-%s  ",i,strs.get(i));
+	public static int getProp(ArrayList<String> strs) {
+		for (int i = 0; i < strs.size(); i++) {
+			System.out.printf("%d-%s  ", i, strs.get(i));
+			if (i == 5)
+				System.out.println();
 		}
 		System.out.println();
-		String reg="^[0-"+(strs.size()-1)+"]$";
-		int choice=Integer.parseInt(getAndCheck("请输入数字表示选项", reg));
-		return choice;
+		String reg = "^[0-" + (strs.size() - 1) + "xXhH]$";
+		String rs = getAndCheck("请输入您想要的卡片编号(输入h获得帮助，输入x返回上一层)", reg);
+		if (rs.toLowerCase().equals("x")) {
+			return -1;
+		} else if (rs.toLowerCase().equals("h")) {
+			return -2;
+		} else {
+			return Integer.parseInt(rs);
+		}
 	}
-	
 
 	public static void printString(String str) {
 		System.out.println(str);
 	}
-	
+
 	public static void printStringArray2(String[][] str) {
 		for (int y = 0; y < str[y].length; y++) {
 			for (int x = 0; x < str.length; x++) {
@@ -67,6 +74,7 @@ public class Output {
 			System.out.println();
 		}
 	}
+
 	private static String getAndCheck(String regular) {
 		while (true) {
 			String inputStr = input.nextLine();
@@ -76,7 +84,7 @@ public class Output {
 			System.out.println("输入错误");
 		}
 	}
-	
+
 	private static String getAndCheck(String message, String regular) {
 		while (true) {
 			System.out.println(message);

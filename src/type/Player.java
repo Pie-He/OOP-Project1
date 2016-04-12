@@ -16,6 +16,7 @@ public class Player extends Removable {
 		this.deposit = 0;
 		this.coupon = 0;
 		this.prop = new MyArray(20);
+		this.setPoi(0);
 		// mov=new Removable();
 	}
 
@@ -25,10 +26,6 @@ public class Player extends Removable {
 		super.setSymbol(symbol);
 		this.hsSymbol = hsSymbol;
 
-	}
-
-	public String getDescription() {
-		return name;
 	}
 
 	public String getName() {
@@ -83,18 +80,41 @@ public class Player extends Removable {
 	}
 
 	public ArrayList<String> propToText() {
-		StringBuffer str = new StringBuffer();
+		// StringBuffer str = new StringBuffer();
 		ArrayList<String> strs = new ArrayList<String>(20);
 		for (int i = 0; i < this.prop.size(); i++) {
-			str.append(i + "-");
-			str.append(prop.get(i).toText());
-			str.append("  ");
+			/*
+			 * str.append(i + "-"); str.append(prop.get(i).toText());
+			 * str.append("  ");
+			 */
 			strs.add(prop.get(i).toText());
 		}
 		// return str.toString();
 		return strs;
 	}
 
+	public int getHouseProperty() {
+		return 0;
+	}
+
+	public String getMessage() {
+		String str = this.getName()
+				+ "\t\t"
+				+ this.getCoupon()
+				+ "\t\t"
+				+ this.getCash()
+				+ "\t\t"
+				+ this.getDeposit()
+				+ "\t\t"
+				+ this.getHouseProperty()
+				+ "\t\t"
+				+ (this.getCash() + this.getDeposit() + this.getHouseProperty());
+		return str;
+	}
+
+	public void fail(){
+		
+	}
 	private class MyArray extends ArrayList<Prop> {
 		/**
 		 * 

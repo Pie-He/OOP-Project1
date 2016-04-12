@@ -2,7 +2,7 @@ package type;
 
 public class RoadBlock extends Removable{
 	private String symbol;
-	public RoadBlock(){
-		
+	public RoadBlock(int poi){
+		this.setPoi(poi);
 	}
 }

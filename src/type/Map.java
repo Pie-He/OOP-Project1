@@ -1,10 +1,8 @@
-package util;
+package type;
 
 import java.io.*;
 
 import place.*;
-import type.PlaceEnum;
-import type.Player;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -22,6 +20,27 @@ public class Map {
 		this.initial();
 	}
 
+	
+
+
+	public String[][] toText() {
+		String[][] map = new String[cells.length][cells[0].length];
+		for (int x = 0; x < map.length; x++) {
+			for (int y = 0; y < map[x].length; y++) {
+				map[x][y] = (cells[x][y]==null?"　":cells[x][y].toText());
+				//=(cells[x][y]==null?"　":cells[x][y].toText());
+			}
+		}
+		return map;
+	}
+
+	public String[][] getInitalMap(){
+		return this.staticMap;
+	}
+	
+	public boolean playerWalk(Player p){
+		return false;
+	}
 	private void getMapData() {
 		File file = new File("places.txt");
 		String str;
@@ -41,7 +60,6 @@ public class Map {
 			}
 		}
 	}
-
 	private void initial(){
 		for (int i = 0; i < places.length; i++) {
 			int x = places[i].getX();
@@ -55,21 +73,6 @@ public class Map {
 			}
 		}
 	}
-	public String[][] toText() {
-		String[][] map = new String[cells.length][cells[0].length];
-		for (int x = 0; x < map.length; x++) {
-			for (int y = 0; y < map[x].length; y++) {
-				map[x][y] = (cells[x][y]==null?"　":cells[x][y].toText());
-				//=(cells[x][y]==null?"　":cells[x][y].toText());
-			}
-		}
-		return map;
-	}
-
-	public String[][] getInitalMap(){
-		return this.staticMap;
-	}
-	
 	private Place getRealInstance(JSONObject jo) {
 		String symbol = jo.get("symbol").toString();
 		for(PlaceEnum p:PlaceEnum.values()){
