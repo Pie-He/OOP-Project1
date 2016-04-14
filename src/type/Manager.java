@@ -48,19 +48,24 @@ public class Manager {
 			case 3:
 
 			case 4:
-
+				
 			case 5:
 				Output.printString("玩家名\t\t点券\t\t现金\t\t存款\t\t房产\t\t资产总额");
 				for (Player p : players)
 					Output.printString(p.getMessage());
 				break;
 			case 6:
-				
+				int dice=this.randomDice();
+				for(int i=0;i<dice;i++){
+					
+				}
 			case 7:
 				player.fail();
 				break;
 			}
 		}
 	}
-
+	private int randomDice(){
+		return (int)(Math.random()*6)+1;
+	}
 }

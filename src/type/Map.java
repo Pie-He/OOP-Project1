@@ -12,16 +12,15 @@ public class Map {
 	private Cell[][] cells;
 	private Place[] places;
 	private String[][] staticMap;
+	public static int mapLength;
 	public Map(int weight, int height) {
 		this.cells = new Cell[weight][height];
 		this.staticMap=new String[weight][height];
 		places=new Place[68];
 		getMapData();
 		this.initial();
+		mapLength=places.length;
 	}
-
-	
-
 
 	public String[][] toText() {
 		String[][] map = new String[cells.length][cells[0].length];
@@ -38,8 +37,22 @@ public class Map {
 		return this.staticMap;
 	}
 	
-	public boolean playerWalk(Player p){
-		return false;
+	//如果能继续移动返回true，否则返回false
+	public boolean movePlayer(Player p){
+		int poi0=p.getStep();
+		if(places[poi0].isBlock()){
+			places[poi0].remove();
+			places[poi0].event(p);
+			return false;
+		}
+		places[poi0].remove();
+		int poi=p.walk();
+		if(places[poi].isBlock()){
+			places[poi0].remove();
+			places[poi].event(p);
+			return false;
+		}
+		return true;
 	}
 	private void getMapData() {
 		File file = new File("places.txt");

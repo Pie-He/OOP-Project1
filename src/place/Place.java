@@ -3,14 +3,12 @@ package place;
 import java.util.*;
 
 import type.*;
-import type.RoadBlock;
 
 public abstract class Place {
 	private int x;
 	private int y;
 	private String symbol;
 	private PriorityQueue<Removable> items = new PriorityQueue<Removable>();
-
 	Place() {
 
 	}
@@ -21,6 +19,7 @@ public abstract class Place {
 		this.setSymbol(symbol);
 	}
 
+	public abstract void event(Player p);
 	public int getX() {
 		return x;
 	}
@@ -58,5 +57,17 @@ public abstract class Place {
 		return items.stream().map(item -> item.getSymbol())
 				.filter(item -> item != null).findFirst().orElse(this.symbol);
 		// return symbol;
+	}
+	
+	public Removable remove(){
+		return this.items.poll();
+	}
+	
+	public void put(Removable item){
+		this.items.add(item);
+	}
+	
+	public boolean isBlock(){
+		return this.items.peek() instanceof RoadBlock;
 	}
 }
