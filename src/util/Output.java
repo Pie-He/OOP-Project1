@@ -1,9 +1,7 @@
 package util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Scanner;
+import java.util.*;
 
 import type.Player;
 
@@ -19,18 +17,20 @@ public class Output {
 		return Integer.parseInt(getAndCheck("请输入玩家人数(2-4):", "^[2-4]$"));
 	}
 
-	public static void getPlayerName(int number) {
+	public static Deque<Player> getPlayerName(int number) {
+		Deque<Player> players=new LinkedList<Player>();
 		for (int i = 0; i < number; i++) {
 			String name = getAndCheck("请输入玩家" + (i + 1) + "名字(数字、字母、下划线):",
 					"^\\w+$");
-			Player player = new Player(name, PLSYMBOL[i], HSSYMBOL[i]);
+			players.add(new Player(name, PLSYMBOL[i], HSSYMBOL[i]));
 			//System.out.println(player.getDescription());
 		}
+		return players;
 	}
 
 	public static void getReady() throws IOException {
 		System.out.println("准备好后，请按回车键开始游戏");
-		System.in.read();
+		input.nextLine();
 		System.out.println("==============游  戏  开  始==============");
 		System.out.println("以下为玩家初始基本信息：");
 	}

@@ -11,7 +11,6 @@ public class Bank extends Place {
 	}
 	@Override
 	public void event(Player p) {
-		// TODO Auto-generated method stub
 		
 	}
 }

@@ -1,4 +1,8 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import type.Player;
 import type.Prop;
@@ -9,32 +13,40 @@ import com.alibaba.fastjson.*;
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-		Prop p=Prop.remoteBoson;
-		p.use();
-		/*String a = "aadsafagadsf";
-		char[] b = a.toCharArray();
-		File file = new File("test.txt");
-		System.out.println(file.exists());
-		if (file.exists()) {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			String playerStr = br.readLine();
-			System.out.println(playerStr);
-			Player player = JSON.parseObject(playerStr, Player.class);
-			System.out.println(player.getCash());
-			System.out.println(player.getCoupon());
-			System.out.println(player.getDeposit());
-			System.out.println(player.getDescription());
-			System.out.println(player.getName());
-			System.out.println(player.getSymbol());
-
-			br.close();
-		}
-		writeMap();*/
-		/*Player t = new Player("hpj", "人", "地");
-		String str = JSON.toJSON(t).toString();
-		JSONObject jo = JSON.parseObject(str);
-		Player a=JSON.toJavaObject(jo, Player.class);
-		System.out.print((int)jo.get("cash"));*/
+		// Prop p=Prop.remoteBoson;
+		// p.use();
+		LinkedList<Player> l = new LinkedList();
+		l.addFirst(new Player());
+		l.addFirst(new Player());
+		l.addFirst(new Player());
+		l.addFirst(new Player());
+		l.stream().forEach(i -> i.setCash(2));
+		System.out.println(l.stream().map(i -> i.getCash()).findAny());
+		System.out.println(l.stream()
+				.filter(item -> item != null).findAny());
+		System.out.println(l.remove(null));
+		/*
+		 * String a = "aadsafagadsf"; char[] b = a.toCharArray(); File file =
+		 * new File("test.txt"); System.out.println(file.exists()); if
+		 * (file.exists()) { BufferedReader br = new BufferedReader(new
+		 * FileReader(file)); String playerStr = br.readLine();
+		 * System.out.println(playerStr); Player player =
+		 * JSON.parseObject(playerStr, Player.class);
+		 * System.out.println(player.getCash());
+		 * System.out.println(player.getCoupon());
+		 * System.out.println(player.getDeposit());
+		 * System.out.println(player.getDescription());
+		 * System.out.println(player.getName());
+		 * System.out.println(player.getSymbol());
+		 * 
+		 * br.close(); } writeMap();
+		 */
+		/*
+		 * Player t = new Player("hpj", "人", "地"); String str =
+		 * JSON.toJSON(t).toString(); JSONObject jo = JSON.parseObject(str);
+		 * Player a=JSON.toJavaObject(jo, Player.class);
+		 * System.out.print((int)jo.get("cash"));
+		 */
 	}
 
 	public static void writeMap() throws IOException {
@@ -119,9 +131,9 @@ public class Tools {
 			places[65] = new Lottery(2, 4, "彩");
 		}
 		File file = new File("places.txt");
-		BufferedWriter bw=new BufferedWriter(new FileWriter(file));
-		if(file.exists()){
-			for(int i=0;i<places.length;i++){
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+		if (file.exists()) {
+			for (int i = 0; i < places.length; i++) {
 				bw.write(JSON.toJSONString(places[i]));
 				bw.write("\r\n");
 			}

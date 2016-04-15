@@ -8,7 +8,8 @@ public abstract class Place {
 	private int x;
 	private int y;
 	private String symbol;
-	private PriorityQueue<Removable> items = new PriorityQueue<Removable>();
+	private LinkedList<Removable> items = new LinkedList<Removable>();
+
 	Place() {
 
 	}
@@ -20,6 +21,7 @@ public abstract class Place {
 	}
 
 	public abstract void event(Player p);
+
 	public int getX() {
 		return x;
 	}
@@ -55,19 +57,27 @@ public abstract class Place {
 		// return items.stream().filter(item -> !(item instanceof RoadBlock))
 		// .map(item -> item.getSymbol()).findFirst().orElse(this.symbol);
 		return items.stream().map(item -> item.getSymbol())
-				.filter(item -> item != null).findFirst().orElse(this.symbol);
+				.filter(item -> item != null).findAny().orElse(this.symbol);
 		// return symbol;
 	}
-	
-	public Removable remove(){
-		return this.items.poll();
+
+	public void put(Removable item) {
+		this.items.addFirst(item);
 	}
-	
-	public void put(Removable item){
-		this.items.add(item);
+
+	public boolean isBlock() {
+		return this.items.stream().filter(item -> item instanceof RoadBlock)
+				.findAny().map(item -> true).orElse(false);
 	}
-	
-	public boolean isBlock(){
-		return this.items.peek() instanceof RoadBlock;
+
+	public boolean remove(Player p) {
+		return this.items.remove(p);
+	}
+
+	public boolean removeBlock() {
+		Removable it = this.items.stream()
+				.filter(item -> item instanceof RoadBlock).findAny()
+				.orElse(null);
+		return items.remove(it);
 	}
 }
