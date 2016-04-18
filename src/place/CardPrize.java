@@ -8,7 +8,7 @@ public class CardPrize extends Place{
 		
 	}
 	public CardPrize(int x, int y, String symbol) {
-		super(x,y,symbol);
+		super(x,y,symbol,"赠送道具店");
 	}
 	@Override
 	public void event(Player p) {
@@ -17,5 +17,10 @@ public class CardPrize extends Place{
 		Prop prop=Prop.values()[random];
 		Output.printString("恭喜！获得“"+prop+"”1个！");
 		p.addProp(prop);
+	}
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

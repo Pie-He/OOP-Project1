@@ -2,6 +2,8 @@ package type;
 
 import java.util.*;
 
+import place.House;
+
 public class Player extends Removable {
 	private String name;
 	private int cash;// Íæ¼ÒÏÖ½ð
@@ -10,15 +12,16 @@ public class Player extends Removable {
 	private String hsSymbol;
 	// private int step;
 	private int direction;
-	private MyArray prop;
-
+	private ArrayList<Prop> props;
+	private PriorityQueue<House> houses;
 	public Player() {
 		this.cash = 5000;
 		this.deposit = 0;
 		this.coupon = 0;
-		this.prop = new MyArray(20);
+		this.props = new ArrayList<Prop>(20);
 		this.direction = 1;
 		this.setPoi(50);
+		houses=new PriorityQueue<House>(20);
 		// mov=new Removable();
 	}
 
@@ -85,29 +88,29 @@ public class Player extends Removable {
 	}
 
 	public boolean addProp(Prop p) {
-		return this.prop.add(p);
+		return this.props.add(p);
 	}
 
 	public void removeProp(int index) {
-		this.prop.remove(index);
+		this.props.remove(index);
 	}
 
 	public void useProp(int index) {
-		Prop p = prop.get(index);
+		Prop p = props.get(index);
 		if (p.use())
-			prop.remove(index);
+			props.remove(index);
 
 	}
 
 	public ArrayList<String> propToText() {
 		// StringBuffer str = new StringBuffer();
 		ArrayList<String> strs = new ArrayList<String>(20);
-		for (int i = 0; i < this.prop.size(); i++) {
+		for (int i = 0; i < this.props.size(); i++) {
 			/*
 			 * str.append(i + "-"); str.append(prop.get(i).toText());
 			 * str.append("  ");
 			 */
-			strs.add(prop.get(i).toText());
+			strs.add(props.get(i).toText());
 		}
 		// return str.toString();
 		return strs;
@@ -141,14 +144,15 @@ public class Player extends Removable {
 		this.direction = -this.direction;
 	}
 
+	public int getHouseAmount(){
+		return this.houses.size();
+	}
 	public void fail() {
 
 	}
 
-	private class MyArray extends ArrayList<Prop> {
-		/**
-		 * 
-		 */
+	/*private class MyArray extends ArrayList<Prop> {
+
 		private static final long serialVersionUID = -2525821341292125610L;
 		private int capacity;
 
@@ -166,5 +170,5 @@ public class Player extends Removable {
 			return isFull() ? false : super.add(p);
 		}
 
-	}
+	}*/
 }

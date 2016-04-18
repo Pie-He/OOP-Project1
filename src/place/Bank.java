@@ -7,7 +7,7 @@ public class Bank extends Place {
 		
 	}
 	public Bank(int x, int y, String symbol) {
-		super(x,y,symbol);
+		super(x,y,symbol,"银行");
 	}
 	@Override
 	public void event(Player p) {
@@ -21,5 +21,10 @@ public class Bank extends Place {
 			return;
 		}
 		Output.printString("存/取款成功");
+	}
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

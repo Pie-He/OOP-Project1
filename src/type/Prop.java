@@ -1,12 +1,19 @@
 package type;
 
 public enum Prop {
-	roadBlock("路障"), remoteBoson("遥控骰子"), reverseCard("转向卡"), stopCard("滞留卡"), taxInspectionCard(
-			"查税卡"), averageRichCard("均富卡"), plunderCard("掠夺卡");
+	roadBlock("路障", 15), remoteBoson("遥控骰子", 30), reverseCard("转向卡", 15), stopCard(
+			"滞留卡", 20), taxInspectionCard("查税卡", 20), averageRichCard("均富卡", 50), plunderCard(
+			"掠夺卡", 30);
 	private String name;
+	private int price;
 
-	Prop(String name) {
+	Prop(String name, int price) {
 		this.name = name;
+		this.price = price;
+	}
+
+	public int getPrice() {
+		return price;
 	}
 
 	public boolean use() {

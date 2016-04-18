@@ -9,18 +9,22 @@ public abstract class Place {
 	private int y;
 	private String symbol;
 	private LinkedList<Removable> items = new LinkedList<Removable>();
+	private String type;
 
 	Place() {
 
 	}
 
-	Place(int x, int y, String symbol) {
+	Place(int x, int y, String symbol, String type) {
 		this.x = x;
 		this.y = y;
 		this.setSymbol(symbol);
+		this.type = type;
 	}
 
 	public abstract void event(Player p);
+
+	public abstract String getDescription();
 
 	public int getX() {
 		return x;
@@ -79,5 +83,15 @@ public abstract class Place {
 				.filter(item -> item instanceof RoadBlock).findAny()
 				.orElse(null);
 		return items.remove(it);
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		if (this.type != null)
+			return;
+		this.type = type;
 	}
 }
