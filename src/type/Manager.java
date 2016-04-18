@@ -64,6 +64,8 @@ public class Manager {
 			case 7:
 				player.fail();
 				return false;
+			case 8:
+				return false;
 			}
 		}
 	}

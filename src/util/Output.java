@@ -10,7 +10,7 @@ public class Output {
 	final private static String[] HSSYMBOL = { "○", "●", "☆", "★" };
 	private final static String[] MainMenu = { "0-查看地图", "1-查看原始地图", "2-使用道具",
 			"3-查看10步十步以内示警", "4-查看前后指定步数的具体信息", "5-查看玩家的资产信息",
-			"6-想看的都看了，心满意足的扔骰子", "7-不玩了，认输" };
+			"6-想看的都看了，心满意足的扔骰子", "7-不玩了，认输", "8-股票" };
 	private static Scanner input = new Scanner(System.in);
 
 	public static int getPlayerNumber() {
@@ -18,12 +18,12 @@ public class Output {
 	}
 
 	public static Deque<Player> getPlayerName(int number) {
-		Deque<Player> players=new LinkedList<Player>();
+		Deque<Player> players = new LinkedList<Player>();
 		for (int i = 0; i < number; i++) {
 			String name = getAndCheck("请输入玩家" + (i + 1) + "名字(数字、字母、下划线):",
 					"^\\w+$");
 			players.add(new Player(name, PLSYMBOL[i], HSSYMBOL[i]));
-			//System.out.println(player.getDescription());
+			// System.out.println(player.getDescription());
 		}
 		return players;
 	}
@@ -39,7 +39,8 @@ public class Output {
 		for (int i = 0; i < MainMenu.length; i++) {
 			System.out.println(MainMenu[i]);
 		}
-		int choice = Integer.parseInt(getAndCheck("请输入数字表示选项", "^[0-7]$"));
+		int choice = Integer.parseInt(getAndCheck("请输入数字表示选项", "^[0-"
+				+ (MainMenu.length - 1) + "]$"));
 		return choice;
 
 	}
@@ -47,7 +48,7 @@ public class Output {
 	public static int getProp(ArrayList<String> strs) {
 		for (int i = 0; i < strs.size(); i++) {
 			System.out.printf("%d-%s  ", i, strs.get(i));
-			if (i == 5)
+			if (i % 5 == 4)
 				System.out.println();
 		}
 		System.out.println();
@@ -60,6 +61,18 @@ public class Output {
 		} else {
 			return Integer.parseInt(rs);
 		}
+	}
+
+	public static int getSaveOrDrawMoney() {
+		int choice = Integer.parseInt(getAndCheck("0-退出	1-取钱	2-存钱\n请选择:",
+				"^[0-2]$"));
+		if (choice == 0)
+			return 0;
+		int saveMoney = Integer
+				.parseInt(getAndCheck("请输入需要存/取的数目:", "^[0-9]*$"));
+		if (choice == 1)
+			saveMoney = -saveMoney;
+		return saveMoney;
 	}
 
 	public static void printString(String str) {

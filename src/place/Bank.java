@@ -1,7 +1,7 @@
 package place;
 
 import type.Player;
-
+import util.*;
 public class Bank extends Place {
 	public Bank(){
 		
@@ -11,6 +11,15 @@ public class Bank extends Place {
 	}
 	@Override
 	public void event(Player p) {
-		
+		int money=Output.getSaveOrDrawMoney();//正：存钱  负：取钱
+		if(!p.addCash(-money)){
+			Output.printString("现金不足");
+			return;
+		}
+		if(!p.addDeposit(money)){
+			Output.printString("存款余额不足");
+			return;
+		}
+		Output.printString("存/取款成功");
 	}
 }

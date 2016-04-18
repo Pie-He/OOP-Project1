@@ -1,6 +1,7 @@
 package place;
 
-import type.Player;
+import type.*;
+import util.Output;
 
 public class CardPrize extends Place{
 	public CardPrize(){
@@ -12,6 +13,9 @@ public class CardPrize extends Place{
 	@Override
 	public void event(Player p) {
 		// TODO Auto-generated method stub
-		
+		int random=(int) (Math.random()*Prop.values().length);
+		Prop prop=Prop.values()[random];
+		Output.printString("¹§Ï²£¡»ñµÃ¡°"+prop+"¡±1¸ö£¡");
+		p.addProp(prop);
 	}
 }

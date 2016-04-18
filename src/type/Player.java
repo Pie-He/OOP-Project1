@@ -8,7 +8,7 @@ public class Player extends Removable {
 	private int deposit;// 玩家存款
 	private int coupon;// 玩家点券
 	private String hsSymbol;
-	//private int step;
+	// private int step;
 	private int direction;
 	private MyArray prop;
 
@@ -42,8 +42,14 @@ public class Player extends Removable {
 		return cash;
 	}
 
-	public void setCash(int plCash) {
-		this.cash = plCash;
+	public void setCash(int cash) {
+		this.cash = cash;
+	}
+
+	public boolean addCash(int cash) {
+		if (this.cash + cash < 0)
+			return false;
+		return (this.cash += cash) >= 0;
 	}
 
 	public int getDeposit() {
@@ -54,12 +60,24 @@ public class Player extends Removable {
 		this.deposit = plDeposit;
 	}
 
+	public boolean addDeposit(int deposit) {
+		if (this.deposit + deposit < 0)
+			return false;
+		return (this.deposit += deposit) >= 0;
+	}
+
 	public int getCoupon() {
 		return coupon;
 	}
 
 	public void setCoupon(int plCoupon) {
 		this.coupon = plCoupon;
+	}
+
+	public boolean addCoupon(int coupon) {
+		if (this.coupon + coupon < 0)
+			return false;
+		return (this.coupon += coupon) >= 0;
 	}
 
 	public String getHsSymbol() {
@@ -115,15 +133,14 @@ public class Player extends Removable {
 	}
 
 	public int walk() {
-		this.poi = (this.poi + this.direction + Map.mapLength)
-				% Map.mapLength;
+		this.poi = (this.poi + this.direction + Map.mapLength) % Map.mapLength;
 		return this.poi;
 	}
 
-	public void reverse(){
-		this.direction=-this.direction;
+	public void reverse() {
+		this.direction = -this.direction;
 	}
-	
+
 	public void fail() {
 
 	}
