@@ -90,7 +90,7 @@ public class Map {
 				while ((str = br.readLine()) != null) {
 					JSONObject jo = JSON.parseObject(str);
 					places[i] = getRealInstance(jo);
-					System.out.print(places[i].getDescription());
+					//System.out.print(places[i].getDescription());
 					i++;
 				}
 				br.close();

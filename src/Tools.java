@@ -1,9 +1,11 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import type.Manager;
 import type.Player;
 import type.Prop;
 import place.*;
@@ -40,8 +42,14 @@ public class Tools {
 		 * 
 		 * br.close(); }
 		 */
-		writeMap();
-
+		// writeMap();
+		LinkedList<Player> l = new LinkedList();
+		l.add(new Player());
+		l.add(new Player());
+		l.add(new Player());
+		IntSummaryStatistics stats = l.stream()
+				.mapToInt((x) -> x.getCash()).summaryStatistics();
+		System.out.println(stats.getMax());
 		/*
 		 * Player t = new Player("hpj", "»À", "µÿ"); String str =
 		 * JSON.toJSON(t).toString(); JSONObject jo = JSON.parseObject(str);
