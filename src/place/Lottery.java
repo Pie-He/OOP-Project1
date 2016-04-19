@@ -11,12 +11,10 @@ public class Lottery extends Place{
 	}
 	@Override
 	public void event(Player p) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "¿‡–Õ"+getType()+"\n";
 	}
 }

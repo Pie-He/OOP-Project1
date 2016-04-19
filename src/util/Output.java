@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 import type.Player;
+import type.Prop;
 
 public class Output {
 	final private static String[] PLSYMBOL = { "□", "■", "△", "▲" };
@@ -58,6 +59,22 @@ public class Output {
 			return -1;
 		} else if (rs.toLowerCase().equals("h")) {
 			return -2;
+		} else {
+			return Integer.parseInt(rs);
+		}
+	}
+
+	public static int getBuyProp() {
+		for (int i = 0; i < Prop.values().length; i++) {
+			System.out.printf("%d-%s  ", i, Prop.values()[i].toText());
+			if (i % 5 == 4)
+				System.out.println();
+		}
+		System.out.println();
+		String reg = "^[0-" + (Prop.values().length - 1) + "xX]$";
+		String rs = getAndCheck("请输入您想要的卡片编号(输入x退出)", reg);
+		if (rs.toLowerCase().equals("x")) {
+			return -1;
 		} else {
 			return Integer.parseInt(rs);
 		}

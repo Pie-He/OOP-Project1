@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import type.Manager;
 import type.Player;
 import type.Prop;
+import util.Output;
 import place.*;
 
 import com.alibaba.fastjson.*;
@@ -50,6 +51,7 @@ public class Tools {
 		IntSummaryStatistics stats = l.stream()
 				.mapToInt((x) -> x.getCash()).summaryStatistics();
 		System.out.println(stats.getMax());
+		Output.getBuyProp();
 		/*
 		 * Player t = new Player("hpj", "»À", "µÿ"); String str =
 		 * JSON.toJSON(t).toString(); JSONObject jo = JSON.parseObject(str);

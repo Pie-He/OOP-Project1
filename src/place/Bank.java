@@ -25,6 +25,6 @@ public class Bank extends Place {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "¿‡–Õ"+getType()+"\n";
 	}
 }
