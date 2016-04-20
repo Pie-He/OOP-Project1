@@ -1,13 +1,18 @@
 package place;
 
+import type.Manager;
 import type.Player;
+import util.Output;
 
 public class House extends Place implements Comparable<House> {
 	// private int price;
+	private static final int MAXLEVEL = 5;
 	private int initialPrice;
 	private int level;
 	private String name;
 	private Player owner;
+
+	// private Street street;
 
 	public House() {
 		this.level = 1;
@@ -23,6 +28,7 @@ public class House extends Place implements Comparable<House> {
 		this.name = name;
 		this.initialPrice = initialPrice;
 		this.level = 1;
+		// this.street=street;
 	}
 
 	@Override
@@ -63,19 +69,91 @@ public class House extends Place implements Comparable<House> {
 		this.name = name;
 	}
 
-	@Override
-	public void event(Player p) {
-		// TODO Auto-generated method stub
+	public String getStreet() {
+		return this.name.substring(0, name.length() - 1);
+	}
 
+	public String getSymbol() {
+		return (owner == null ? super.getSymbol() : owner.getHsSymbol());
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "类型" + this.getType() + "\n" + 
-				"名称" + name + "\n" + 
-				"初始价格"+ this.initialPrice + "元" + "\n"+
-				"当前等级"+ this.level+"级"+"\n"+
-				"拥有者"+this.owner==null?"(可供出售状态)":this.owner.getName()+"\n";
+		return "类型" + this.getType() + "\n" + "名称" + name + "\n" + "初始价格"
+				+ this.initialPrice + "元" + "\n" + "当前等级" + this.level + "级"
+				+ "\n" + "拥有者"
+				+ (this.owner == null ? "(可供出售状态)" : this.owner.getName())
+				+ "\n";
+	}
+
+	@Override
+	public void event(Player p) {
+		super.event(p);
+		if (this.owner == null) {
+			this.sell(p);
+		} else if (this.owner == p) {
+			this.levelUp();
+		} else {
+			this.charge(p);
+		}
+	}
+
+	private void sell(Player p) {
+		if (!Output.getYesOrNo("是否需要购买？"))
+			return;
+		if (!p.addCash(-this.getPrice())) {
+			Output.printString("现金不足！！！");
+			return;
+		}
+		p.addHouse(this);
+		this.owner = p;
+		Output.printString("购地成功！！！");
+	}
+
+	private void levelUp() {
+		if (this.level >= MAXLEVEL) {
+			Output.printString("已最高级！！！");
+			return;
+		}
+		if (!Output.getYesOrNo("是否需要升级？"))
+			return;
+		if (!owner.addCash(-this.initialPrice / 2)) {
+			Output.printString("现金不足！！！");
+			return;
+		}
+		this.level++;
+		Output.printString("升级成功！！！");
+	}
+
+	private void charge(Player p) {
+		int fee = this.getFee();
+		Output.printString("缴交过路费" + fee + "元给" + owner.getName());
+		owner.addCash(fee);
+		if (p.addCash(-fee))
+			return;
+		Output.printString("现金不足，银行存款抵扣！");
+		fee -= p.getCash();
+		p.setCash(0);
+		if (p.addDeposit(-fee))
+			return;
+		Output.printString("银行存款不足，变卖土地抵扣！");
+		fee -= p.getDeposit();
+		p.setDeposit(0);
+		while (fee <= 0) {
+			House house = p.sellHouse();
+			if (house == null) {
+				Manager.fail(p);
+			}
+			if ((fee -= house.getPrice()) <= 0) {
+				p.addCash(-fee);
+				break;
+			}
+		}
+	}
+
+	private int getFee() {
+		return owner.getStreet(this.getStreet()).stream()
+				.mapToInt(i -> i.getPrice()).sum()
+				/ 10 + this.getPrice() / 5;
 	}
 }

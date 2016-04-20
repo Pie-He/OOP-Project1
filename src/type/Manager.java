@@ -73,4 +73,9 @@ public class Manager {
 	private int randomDice() {
 		return (int) (Math.random() * 6) + 1;
 	}
+
+	public static void fail(Player p) {
+		// TODO Auto-generated method stub
+		
+	}
 }

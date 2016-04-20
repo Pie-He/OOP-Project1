@@ -1,6 +1,7 @@
 package type;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import place.House;
 
@@ -14,14 +15,15 @@ public class Player extends Removable {
 	private int direction;
 	private ArrayList<Prop> props;
 	private PriorityQueue<House> houses;
+
 	public Player() {
 		this.cash = 5000;
 		this.deposit = 0;
 		this.coupon = 0;
 		this.props = new ArrayList<Prop>(20);
 		this.direction = 1;
-		this.setPoi(50);
-		houses=new PriorityQueue<House>(20);
+		this.setPoi(0);
+		houses = new PriorityQueue<House>(20);
 		// mov=new Removable();
 	}
 
@@ -116,10 +118,6 @@ public class Player extends Removable {
 		return strs;
 	}
 
-	public int getHouseProperty() {
-		return 0;
-	}
-
 	public String getMessage() {
 		String str = this.getName()
 				+ "\t\t"
@@ -144,31 +142,43 @@ public class Player extends Removable {
 		this.direction = -this.direction;
 	}
 
-	public int getHouseAmount(){
+	public int getHouseAmount() {
 		return this.houses.size();
 	}
+
+	public void addHouse(House house) {
+		this.houses.add(house);
+	}
+
+	public int getHouseProperty() {
+		return houses.stream().mapToInt(i -> i.getPrice()).sum();
+	}
+
+	public Collection<House> getStreet(String str){
+		return houses.stream().filter(i->i.getStreet().equals(str)).collect(Collectors.toList());
+	}
+	
+	public House sellHouse(){
+		return this.houses.poll();
+	}
+	
 	public void fail() {
 
 	}
 
-	/*private class MyArray extends ArrayList<Prop> {
-
-		private static final long serialVersionUID = -2525821341292125610L;
-		private int capacity;
-
-		MyArray(int capacity) {
-			super(capacity);
-			this.capacity = capacity;
-		}
-
-		boolean isFull() {
-			return this.size() == capacity;
-		}
-
-		@Override
-		public boolean add(Prop p) {
-			return isFull() ? false : super.add(p);
-		}
-
-	}*/
+	/*
+	 * private class MyArray extends ArrayList<Prop> {
+	 * 
+	 * private static final long serialVersionUID = -2525821341292125610L;
+	 * private int capacity;
+	 * 
+	 * MyArray(int capacity) { super(capacity); this.capacity = capacity; }
+	 * 
+	 * boolean isFull() { return this.size() == capacity; }
+	 * 
+	 * @Override public boolean add(Prop p) { return isFull() ? false :
+	 * super.add(p); }
+	 * 
+	 * }
+	 */
 }

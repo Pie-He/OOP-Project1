@@ -47,6 +47,10 @@ public class Output {
 	}
 
 	public static int getProp(ArrayList<String> strs) {
+		if (strs.size() < 1) {
+			System.out.println("无道具");
+			return -1;
+		}
 		for (int i = 0; i < strs.size(); i++) {
 			System.out.printf("%d-%s  ", i, strs.get(i));
 			if (i % 5 == 4)
@@ -92,6 +96,10 @@ public class Output {
 		return saveMoney;
 	}
 
+	public static boolean getYesOrNo(String str) {
+		return Integer.parseInt(getAndCheck(str + "(0-取消		1-确定)", "^[0-1]$")) == 1;
+	}
+
 	public static void printString(String str) {
 		System.out.println(str);
 	}
@@ -103,6 +111,10 @@ public class Output {
 			}
 			System.out.println();
 		}
+	}
+
+	public static void inputClose() {
+		input.close();
 	}
 
 	private static String getAndCheck(String regular) {
@@ -131,10 +143,6 @@ public class Output {
 		String rs = getAndCheck(message, regular);
 		System.out.println(returnMessage);
 		return rs;
-	}
-
-	public static void inputClose() {
-		input.close();
 	}
 
 }

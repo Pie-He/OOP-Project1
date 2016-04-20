@@ -21,6 +21,7 @@ public class News extends Place {
 	@Override
 	public void event(Player p) {
 		// TODO Auto-generated method stub
+		super.event(p);
 		int random = (int) (Math.random() * 5);// 获得0~4随机数
 		switch (random) {
 		case 0: {

@@ -3,6 +3,7 @@ package place;
 import java.util.*;
 
 import type.*;
+import util.Output;
 
 public abstract class Place {
 	private int x;
@@ -22,10 +23,13 @@ public abstract class Place {
 		this.type = type;
 	}
 
-	public abstract void event(Player p);
-
 	public abstract String getDescription();
 
+	public void event(Player p){
+		Output.printString(this.getDescription());
+	};
+
+	
 	public int getX() {
 		return x;
 	}
@@ -61,7 +65,7 @@ public abstract class Place {
 		// return items.stream().filter(item -> !(item instanceof RoadBlock))
 		// .map(item -> item.getSymbol()).findFirst().orElse(this.symbol);
 		return items.stream().map(item -> item.getSymbol())
-				.filter(item -> item != null).findAny().orElse(this.symbol);
+				.filter(item -> item != null).findAny().orElse(this.getSymbol());
 		// return symbol;
 	}
 

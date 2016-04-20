@@ -12,7 +12,7 @@ public class CardPrize extends Place{
 	}
 	@Override
 	public void event(Player p) {
-		// TODO Auto-generated method stub
+		super.event(p);
 		int random=(int) (Math.random()*Prop.values().length);
 		Prop prop=Prop.values()[random];
 		Output.printString("¹§Ï²£¡»ñµÃ¡°"+prop+"¡±1¸ö£¡");

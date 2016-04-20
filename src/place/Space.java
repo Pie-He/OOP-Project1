@@ -11,12 +11,10 @@ public class Space extends Place{
 	}
 	@Override
 	public void event(Player p) {
-		// TODO Auto-generated method stub
-		
+		super.event(p);		
 	}
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "¿‡–Õ:"+getType()+"\n";
 	}
 }

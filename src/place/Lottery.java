@@ -11,7 +11,7 @@ public class Lottery extends Place{
 	}
 	@Override
 	public void event(Player p) {
-		
+		super.event(p);
 	}
 	@Override
 	public String getDescription() {

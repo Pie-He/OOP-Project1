@@ -12,7 +12,7 @@ public class Coupon extends Place{
 	}
 	@Override
 	public void event(Player p) {
-		// TODO Auto-generated method stub
+		super.event(p);
 		int coupon=((int)(Math.random()*6)*5+5);
 		Output.printString("πßœ≤£°ªÒµ√ "+coupon+"µ„»Ø£°");
 		p.addCoupon(coupon);

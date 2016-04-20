@@ -13,7 +13,7 @@ public class Shop extends Place{
 	}
 	@Override
 	public void event(Player p) {
-		// TODO Auto-generated method stub
+		super.event(p);
 		while(true){
 			int choice=Output.getBuyProp();
 			if(choice<0)
