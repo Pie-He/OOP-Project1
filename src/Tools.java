@@ -44,21 +44,13 @@ public class Tools {
 		 * br.close(); }
 		 */
 		// writeMap();
-		LinkedList<Player> l = new LinkedList();
-		l.add(new Player());
-		l.add(new Player());
-		l.add(new Player());
-		IntSummaryStatistics stats = l.stream()
-				.mapToInt((x) -> x.getCash()).summaryStatistics();
-		System.out.println(stats.getMax());
-		Output.getBuyProp();
 		/*
 		 * Player t = new Player("hpj", "»À", "µÿ"); String str =
 		 * JSON.toJSON(t).toString(); JSONObject jo = JSON.parseObject(str);
 		 * Player a = JSON.toJavaObject(jo, Player.class);
 		 * System.out.print((int) jo.get("cash"));
 		 */
-
+		//Output.getAndCheck(-34, 3);
 	}
 
 	public static void writeMap() throws IOException {

@@ -24,13 +24,19 @@ public class Manager {
 		 * player.addProp(Prop.remoteBoson);
 		 */
 		map.init(players);
+		for(int i=0;i<20;i++)
+			players.getFirst().addProp(Prop.roadBlock);
 		for (int i = 0; i < 100; i++) {
-			players.stream().forEach(p -> this.event(p));
+			players.stream().forEach(p -> {
+				
+				this.event(p);
+			});
 		}
 		Output.inputClose();
 	}
 
 	private boolean event(Player player) {
+		Output.printString(player.getName()+"行动回合。");
 		while (true) {
 			int choice = Output.getMenuChoice();
 			switch (choice) {
@@ -42,7 +48,7 @@ public class Manager {
 				break;
 			case 2:
 				int propChoice;
-				if ((propChoice = Output.getProp(player.propToText())) >= 0) {
+				while ((propChoice = Output.getProp(player.propToText())) >= 0) {
 					player.useProp(propChoice);
 				}
 				break;
@@ -65,7 +71,7 @@ public class Manager {
 				player.fail();
 				return false;
 			case 8:
-				return false;
+				break;
 			}
 		}
 	}
@@ -76,6 +82,6 @@ public class Manager {
 
 	public static void fail(Player p) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

@@ -16,6 +16,7 @@ public class Shop extends Place{
 		super.event(p);
 		while(true){
 			int choice=Output.getBuyProp();
+			Output.printString("ÄúÓÐ"+p.getCoupon()+"µãÈ¯");
 			if(choice<0)
 				break;
 			Prop prop=Prop.values()[choice];

@@ -98,8 +98,8 @@ public class Player extends Removable {
 	}
 
 	public void useProp(int index) {
-		Prop p = props.get(index);
-		if (p.use())
+		Prop prop = props.get(index);
+		if (prop.use(this))
 			props.remove(index);
 
 	}

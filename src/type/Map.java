@@ -46,6 +46,13 @@ public class Map {
 		places[player.getPoi()].event(player);
 	}
 	
+	public boolean addBlock(RoadBlock r){
+		if(this.places[r.getPoi()].isBlock())
+			return false;
+		this.places[r.getPoi()].put(r);
+		return true;
+		
+	}
 	public void init(Collection<Player> players){
 		for (int i = 0; i < places.length; i++) {
 			int x = places[i].getX();
@@ -95,7 +102,6 @@ public class Map {
 				}
 				br.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -132,7 +138,9 @@ public class Map {
 
 	private class Cell {
 
+		@SuppressWarnings("unused")
 		private int x;
+		@SuppressWarnings("unused")
 		private int y;
 		private Place place;
 

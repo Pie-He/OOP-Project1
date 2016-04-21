@@ -63,7 +63,6 @@ public class News extends Place {
 		});
 	}
 
-
 	private void news(int choice) {
 		int rewards = ((int) (Math.random() * 10 + 1)) * 1000;
 		Deque<Player> pls = new LinkedList<Player>();
@@ -83,13 +82,15 @@ public class News extends Place {
 
 		Manager.players.stream().filter(i -> i.getHouseAmount() == tmp)
 				.forEach(pls::add);
-		Output.printString(str + pls.stream().map(i -> i.getName() + " ")
-				+ "奖励" + rewards + "元");
+		Output.printString(str
+				+ pls.stream().map(i -> i.getName())
+						.reduce((x, y) -> x += (" " + y + " ")) + "奖励"
+				+ rewards + "元");
 	}
 
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "类型"+getType()+"\n";
+		return "类型" + getType() + "\n";
 	}
 }

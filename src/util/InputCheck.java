@@ -31,4 +31,6 @@ public class InputCheck {
 		Matcher matcher = pattern.matcher(inputStr);
 		return matcher.matches();
 	}
+	
+	public static boolean Ch
 }

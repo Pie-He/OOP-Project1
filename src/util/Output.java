@@ -12,6 +12,7 @@ public class Output {
 	private final static String[] MainMenu = { "0-查看地图", "1-查看原始地图", "2-使用道具",
 			"3-查看10步十步以内示警", "4-查看前后指定步数的具体信息", "5-查看玩家的资产信息",
 			"6-想看的都看了，心满意足的扔骰子", "7-不玩了，认输", "8-股票" };
+	private final static String NUMBERREGULAR = "-?\\d+$";
 	private static Scanner input = new Scanner(System.in);
 
 	public static int getPlayerNumber() {
@@ -97,7 +98,16 @@ public class Output {
 	}
 
 	public static boolean getYesOrNo(String str) {
-		return Integer.parseInt(getAndCheck(str + "(0-取消		1-确定)", "^[0-1]$")) == 1;
+		return getAndCheck(str + "(0-取消	1-确定)", 0, 1) == 1;
+		// return Integer.parseInt(getAndCheck(str + "(0-取消	1-确定)", "^[0-1]$"))
+		// == 1;
+	}
+
+	public static int getPoiChoice() {
+		// "(\\-1[0-2]|\\-[1-9])|[0-9]|1[0-2]"
+		// String reg = "\\-[1-8]|[0-8]";
+		// String rs = getAndCheck("请输入前后方8格内的数字(负数表示逆时针方向)", reg);
+		return getAndCheck("请输入前后方8格内的数字(负数表示逆时针方向)", -8, 8);
 	}
 
 	public static void printString(String str) {
@@ -122,6 +132,18 @@ public class Output {
 			String inputStr = input.nextLine();
 			if (InputCheck.check(inputStr, regular)) {
 				return inputStr;
+			}
+			System.out.println("输入错误");
+		}
+	}
+
+	private static int getAndCheck(String message, int lb, int up) {
+		while (true) {
+			String inputStr = input.nextLine();
+			if (InputCheck.check(inputStr, NUMBERREGULAR)) {
+				int rs = Integer.parseInt(inputStr);
+				if (rs >= lb && rs <= up)
+					return rs;
 			}
 			System.out.println("输入错误");
 		}
