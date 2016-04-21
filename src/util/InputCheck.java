@@ -32,5 +32,4 @@ public class InputCheck {
 		return matcher.matches();
 	}
 	
-	public static boolean Ch
 }

@@ -2,10 +2,13 @@ package type;
 
 import java.io.IOException;
 import java.util.*;
+
 import util.Output;
 
 public class Manager {
 	public static Deque<Player> players;
+	final private static String[] PLSYMBOL = { "□", "■", "△", "▲" };
+	final private static String[] HSSYMBOL = { "○", "●", "☆", "★" };
 	/*
 	 * static{
 	 * player.stream().filter(item->(item.getCash()==10000)).findFirst(); }
@@ -14,7 +17,12 @@ public class Manager {
 
 	public void start() throws IOException {
 		int playerNum = Output.getPlayerNumber();
-		players = Output.getPlayerName(playerNum);
+		int index = 0;
+		players=new LinkedList<Player>();
+		for (String name : Output.getPlayerName(playerNum)) {
+			players.add(new Player(name, PLSYMBOL[index], HSSYMBOL[index++]));
+		}
+		//News.news4();
 		Output.getReady();
 		/*
 		 * // Player player = Manager.players.pop(); //Player player = new
@@ -24,11 +32,11 @@ public class Manager {
 		 * player.addProp(Prop.remoteBoson);
 		 */
 		map.init(players);
-		for(int i=0;i<20;i++)
+		for (int i = 0; i < 20; i++)
 			players.getFirst().addProp(Prop.roadBlock);
 		for (int i = 0; i < 100; i++) {
 			players.stream().forEach(p -> {
-				
+
 				this.event(p);
 			});
 		}
@@ -36,7 +44,7 @@ public class Manager {
 	}
 
 	private boolean event(Player player) {
-		Output.printString(player.getName()+"行动回合。");
+		Output.printString(player.getName() + "行动回合。");
 		while (true) {
 			int choice = Output.getMenuChoice();
 			switch (choice) {
@@ -53,7 +61,7 @@ public class Manager {
 				}
 				break;
 			case 3:
-				
+
 			case 4:
 
 			case 5:
@@ -81,7 +89,6 @@ public class Manager {
 	}
 
 	public static void fail(Player p) {
-		// TODO Auto-generated method stub
 
 	}
 }

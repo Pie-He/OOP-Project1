@@ -54,13 +54,14 @@ public class News extends Place {
 	private void news4() {
 		// TODO Auto-generated method stub
 		Output.printString("每个人得到一张卡片");
-		Manager.players.stream().map(i -> {
-			int random = (int) (Math.random() * Prop.values().length);
-			Prop prop = Prop.values()[random];
-			i.addProp(prop);
-			Output.printString("恭喜！" + i.getName() + "获得“" + prop + "”1个！");
-			return 0;
-		});
+		Manager.players.stream().forEach(
+				i -> {
+					int random = (int) (Math.random() * Prop.values().length);
+					Prop prop = Prop.values()[random];
+					i.addProp(prop);
+					Output.printString("恭喜！" + i.getName() + "获得“"
+							+ prop.toText() + "”1个！");
+				});
 	}
 
 	private void news(int choice) {
