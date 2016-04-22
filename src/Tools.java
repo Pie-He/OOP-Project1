@@ -16,33 +16,13 @@ import com.alibaba.fastjson.*;
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-		// Prop p=Prop.remoteBoson;
-		// p.use();
-		/*
-		 * LinkedList<Player> l = new LinkedList(); l.addFirst(new Player());
-		 * l.addFirst(new Player()); l.addFirst(new Player()); l.addFirst(new
-		 * Player()); l.stream().forEach(i -> i.setCash(2)); for (Player p : l)
-		 * { p.setName("a"); } l.stream().map(i ->
-		 * i.getName()).forEach(System.out::println);
-		 * System.out.println(l.stream().map(i -> i.getCash()).findAny());
-		 * System.out.println(l.stream() .filter(item -> item !=
-		 * null).findAny()); System.out.println(l.remove(null));
-		 */// String a = "aadsafagadsf";
-		/*
-		 * char[] b = a.toCharArray(); File file = new File("test.txt");
-		 * System.out.println(file.exists()); if (file.exists()) {
-		 * BufferedReader br = new BufferedReader(new FileReader(file)); String
-		 * playerStr = br.readLine(); System.out.println(playerStr); Player
-		 * player = JSON.parseObject(playerStr, Player.class);
-		 * System.out.println(player.getCash());
-		 * System.out.println(player.getCoupon());
-		 * System.out.println(player.getDeposit());
-		 * //System.out.println(player.getDescription());
-		 * System.out.println(player.getName());
-		 * System.out.println(player.getSymbol());
-		 * 
-		 * br.close(); }
-		 */
+		LinkedList<Player> l=new LinkedList<Player>();
+		l.add(new Player());
+		l.add(new Player());
+		l.add(new Player());
+		l.add(new Player());
+		//for(int i=0;i<l.size();i++)
+			
 		// writeMap();
 		/*
 		 * Player t = new Player("hpj", "ÈË", "µØ"); String str =

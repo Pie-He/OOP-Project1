@@ -108,10 +108,6 @@ public class Player extends Removable {
 		// StringBuffer str = new StringBuffer();
 		ArrayList<String> strs = new ArrayList<String>(20);
 		for (int i = 0; i < this.props.size(); i++) {
-			/*
-			 * str.append(i + "-"); str.append(prop.get(i).toText());
-			 * str.append("  ");
-			 */
 			strs.add(props.get(i).toText());
 		}
 		// return str.toString();
@@ -134,12 +130,18 @@ public class Player extends Removable {
 	}
 
 	public int walk() {
-		this.poi = (this.poi + this.direction + Map.mapLength) % Map.mapLength;
+		this.poi = (this.poi + this.direction + Manager.map.mapLength)
+				% Manager.map.mapLength;
 		return this.poi;
 	}
 
 	public void reverse() {
 		this.direction = -this.direction;
+	}
+
+	public int getPrePoi(int dis) {
+		return (this.poi + this.direction * dis + Manager.map.mapLength)
+				% Manager.map.mapLength;
 	}
 
 	public int getHouseAmount() {
@@ -154,14 +156,15 @@ public class Player extends Removable {
 		return houses.stream().mapToInt(i -> i.getPrice()).sum();
 	}
 
-	public Collection<House> getStreet(String str){
-		return houses.stream().filter(i->i.getStreet().equals(str)).collect(Collectors.toList());
+	public Collection<House> getStreet(String str) {
+		return houses.stream().filter(i -> i.getStreet().equals(str))
+				.collect(Collectors.toList());
 	}
-	
-	public House sellHouse(){
+
+	public House sellHouse() {
 		return this.houses.poll();
 	}
-	
+
 	public void fail() {
 
 	}

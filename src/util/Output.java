@@ -23,7 +23,7 @@ public class Output {
 			String name = getAndCheck("请输入玩家" + (i + 1) + "名字(数字、字母、下划线):",
 					"^\\w+$");
 			players.add(name);
-			//players.add(new Player(name, PLSYMBOL[i], HSSYMBOL[i]));
+			// players.add(new Player(name, PLSYMBOL[i], HSSYMBOL[i]));
 			// System.out.println(player.getDescription());
 		}
 		return players;
@@ -102,13 +102,16 @@ public class Output {
 		// == 1;
 	}
 
-	public static int getPoiChoice() {
+	public static int getDistanceChoice(String str, int lb, int ub) {
 		// "(\\-1[0-2]|\\-[1-9])|[0-9]|1[0-2]"
 		// String reg = "\\-[1-8]|[0-8]";
 		// String rs = getAndCheck("请输入前后方8格内的数字(负数表示逆时针方向)", reg);
-		return getAndCheck("请输入前后方8格内的数字(负数表示逆时针方向)", -8, 8);
+		String rs=getAndCheck(str, lb, ub,"x");
+		if(rs.equals("x"))
+			return ub+1;
+		return Integer.parseInt(rs);
 	}
-
+	
 	public static void printString(String str) {
 		System.out.println(str);
 	}
@@ -136,13 +139,13 @@ public class Output {
 		}
 	}
 
-	private static int getAndCheck(String message, int lb, int up) {
+	private static int getAndCheck(String message, int lb, int ub) {
 		while (true) {
 			System.out.println(message);
 			String inputStr = input.nextLine();
 			if (InputCheck.check(inputStr, NUMBERREGULAR)) {
 				int rs = Integer.parseInt(inputStr);
-				if (rs >= lb && rs <= up)
+				if (rs >= lb && rs <= ub)
 					return rs;
 			}
 			System.out.println("输入错误");

@@ -21,31 +21,37 @@ public enum Prop {
 	public boolean use(Player p) {
 		switch (this) {
 		case roadBlock:
-			this.useRoadBlock(p);
-			break;
+			return this.useRoadBlock(p);
 		case remoteBoson:
+			this.useRemoteBoson(p);
 		case reverseCard:
 		case stopCard:
 		case taxInspectionCard:
 		case averageRichCard:
 		case plunderCard:
 		default:
-			break;
+			return true;
 		}
-		return true;
 	}
 
-	private void useRoadBlock(Player p) {
-		int dis=Output.getPoiChoice();
-		int poi=p.getPoi()+dis;
-		if(!Manager.map.addBlock(new RoadBlock(poi))){
+	private void useRemoteBoson(Player p) {
+		
+	}
+
+	private boolean useRoadBlock(Player p) {
+		int dis = Output.getDistanceChoice("请输入前后方8格内的数字(负数表示后方,x-取消)", -8, 8);
+		if (dis > 8)
+			return false;
+		int poi = p.getPrePoi(dis);
+		if (!Manager.map.addBlock(new RoadBlock(poi))) {
 			Output.printString("该位置已放置路障");
+			return false;
 		}
+		return true;
 	}
 
 	public String toText() {
 		return name;
 	}
-	
-	
+
 }

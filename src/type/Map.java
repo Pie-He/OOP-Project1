@@ -10,6 +10,10 @@ import com.alibaba.fastjson.JSONObject;
 
 public class Map {
 
+	private Cell[][] cells;
+	private Place[] places;
+	private String[][] staticMap;
+	public int mapLength;
 	public Map(int weight, int height) {
 		this.cells = new Cell[weight][height];
 		this.staticMap=new String[weight][height];
@@ -18,10 +22,6 @@ public class Map {
 		mapLength=places.length;
 	}
 
-	private Cell[][] cells;
-	private Place[] places;
-	private String[][] staticMap;
-	public static int mapLength;
 	public String[][] toText() {
 		String[][] map = new String[cells.length][cells[0].length];
 		for (int x = 0; x < map.length; x++) {
@@ -52,6 +52,14 @@ public class Map {
 		this.places[r.getPoi()].put(r);
 		return true;
 		
+	}
+	
+	public boolean isBlock(int poi){
+		return this.places[poi].isBlock();
+	}
+	
+	public String getDescription(int poi){
+		return places[poi].getDescription();
 	}
 	public void init(Collection<Player> players){
 		for (int i = 0; i < places.length; i++) {
