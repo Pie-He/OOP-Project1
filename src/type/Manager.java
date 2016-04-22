@@ -1,6 +1,7 @@
 package type;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import util.Output;
@@ -13,8 +14,11 @@ public class Manager {
 	 * static{
 	 * player.stream().filter(item->(item.getCash()==10000)).findFirst(); }
 	 */
+	final private static SimpleDateFormat SDF = new SimpleDateFormat(
+			"今天是yyyy年MM月dd日");
 	static Map map = new Map(39, 19);
 	static int DiceFlag = -1;
+	private Calendar calendar = Calendar.getInstance();
 
 	public void start() throws IOException {
 		int playerNum = Output.getPlayerNumber();
@@ -23,6 +27,7 @@ public class Manager {
 		for (String name : Output.getPlayerName(playerNum)) {
 			players.add(new Player(name, PLSYMBOL[index], HSSYMBOL[index++]));
 		}
+		calendar.set(2016, 0, 1);
 		// News.news4();
 		Output.getReady();
 		/*
@@ -36,6 +41,7 @@ public class Manager {
 		for (int i = 0; i < 20; i++)
 			players.getFirst().addProp(Prop.remoteBoson);
 		for (int i = 0; i < 100; i++) {
+			Output.printString(SDF.format(calendar.getTime()));
 			players.stream().forEach(p -> {
 				this.event(p);
 			});
@@ -44,7 +50,8 @@ public class Manager {
 	}
 
 	private boolean event(Player player) {
-		Output.printString(player.getName() + "行动回合。");
+		Output.printString("现在是玩家“" + player.getName() + "”操作时间，您的前进方向是"
+				+ ((player.getDirection() > 0) ? "顺时针" : "逆时针"));
 		while (true) {
 			int choice = Output.getMenuChoice();
 			switch (choice) {
@@ -111,5 +118,15 @@ public class Manager {
 
 	public static void fail(Player p) {
 
+	}
+
+	private boolean isMonthLast() {
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		boolean is = false;
+		if (calendar.get(Calendar.DAY_OF_MONTH) == 1) {
+			is = true;
+		}
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		return is;
 	}
 }

@@ -1,5 +1,8 @@
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
 import java.util.stream.Collector;
@@ -21,6 +24,20 @@ public class Tools {
 		l.add(new Player());
 		l.add(new Player());
 		l.add(new Player());
+		Calendar c=Calendar.getInstance();
+		c.set(2016, 0, 31);
+		//c.add(0, 1);
+		SimpleDateFormat sdf = new SimpleDateFormat("今天是yyyy年MM月dd日");
+		//c.add(Calendar.DATE, 1);
+		c.add(Calendar.DAY_OF_MONTH, 1);
+       // c.set(Calendar.DATE, (c.get(Calendar.DATE) + 1)); 
+        
+        boolean is=false;
+        if (c.get(Calendar.DAY_OF_MONTH) == 1) { 
+            is= true; 
+        } 
+		System.out.println(is);
+		System.out.println(sdf.format(c.getTime()));
 		//for(int i=0;i<l.size();i++)
 			
 		// writeMap();

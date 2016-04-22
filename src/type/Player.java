@@ -135,6 +135,10 @@ public class Player extends Removable {
 		return this.poi;
 	}
 
+	public int getDirection() {
+		return direction;
+	}
+
 	public void reverse() {
 		this.direction = -this.direction;
 	}

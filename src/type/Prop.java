@@ -25,13 +25,40 @@ public enum Prop {
 		case remoteBoson:
 			return this.useRemoteBoson(p);
 		case reverseCard:
+			return this.useReverseCard(p);
 		case stopCard:
+			return this.useStopCard(p);
 		case taxInspectionCard:
+			return this.useTaxInspectionCard(p);
 		case averageRichCard:
+			return this.useAverageRichCard(p);
 		case plunderCard:
+			return this.usePlunderCard(p);
 		default:
 			return false;
 		}
+	}
+
+	private boolean usePlunderCard(Player p) {
+		return false;
+	}
+
+	private boolean useAverageRichCard(Player p) {
+		return false;
+	}
+
+	private boolean useTaxInspectionCard(Player p) {
+		return false;
+	}
+
+	private boolean useStopCard(Player p) {
+		Manager.DiceFlag=0;
+		return true;
+	}
+
+	private boolean useReverseCard(Player p) {
+		p.reverse();
+		return true;
 	}
 
 	private boolean useRemoteBoson(Player p) {
