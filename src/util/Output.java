@@ -106,12 +106,17 @@ public class Output {
 		// "(\\-1[0-2]|\\-[1-9])|[0-9]|1[0-2]"
 		// String reg = "\\-[1-8]|[0-8]";
 		// String rs = getAndCheck("请输入前后方8格内的数字(负数表示逆时针方向)", reg);
-		String rs=getAndCheck(str, lb, ub,"x");
-		if(rs.equals("x"))
-			return ub+1;
+		String rs = getAndCheck(str, lb, ub, "x");
+		if (rs.equals("x"))
+			return ub + 1;
 		return Integer.parseInt(rs);
 	}
-	
+
+	public static int getDice() {
+		int dice = getAndCheck("请输入投掷的点数(0-取消):", 0, 6);
+		return dice;
+	}
+
 	public static void printString(String str) {
 		System.out.println(str);
 	}

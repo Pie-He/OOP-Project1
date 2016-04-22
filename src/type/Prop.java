@@ -23,19 +23,23 @@ public enum Prop {
 		case roadBlock:
 			return this.useRoadBlock(p);
 		case remoteBoson:
-			this.useRemoteBoson(p);
+			return this.useRemoteBoson(p);
 		case reverseCard:
 		case stopCard:
 		case taxInspectionCard:
 		case averageRichCard:
 		case plunderCard:
 		default:
-			return true;
+			return false;
 		}
 	}
 
-	private void useRemoteBoson(Player p) {
-		
+	private boolean useRemoteBoson(Player p) {
+		int dice = Output.getDice();
+		if (dice < 1)
+			return false;
+		Manager.DiceFlag = dice;
+		return true;
 	}
 
 	private boolean useRoadBlock(Player p) {

@@ -34,7 +34,7 @@ public class Manager {
 		 */
 		map.init(players);
 		for (int i = 0; i < 20; i++)
-			players.getFirst().addProp(Prop.roadBlock);
+			players.getFirst().addProp(Prop.remoteBoson);
 		for (int i = 0; i < 100; i++) {
 			players.stream().forEach(p -> {
 				this.event(p);
