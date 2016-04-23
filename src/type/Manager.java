@@ -7,7 +7,7 @@ import java.util.*;
 import util.Output;
 
 public class Manager {
-	public static Deque<Player> players;
+	public static LinkedList<Player> players;
 	final private static String[] PLSYMBOL = { "□", "■", "△", "▲" };
 	final private static String[] HSSYMBOL = { "○", "●", "☆", "★" };
 	/*
@@ -17,7 +17,7 @@ public class Manager {
 	final private static SimpleDateFormat SDF = new SimpleDateFormat(
 			"今天是yyyy年MM月dd日");
 	static Map map = new Map(39, 19);
-	static int DiceFlag = -1;
+	static int diceFlag = -1;
 	private Calendar calendar = Calendar.getInstance();
 
 	public void start() throws IOException {
@@ -39,12 +39,14 @@ public class Manager {
 		 */
 		map.init(players);
 		for (int i = 0; i < 20; i++)
-			players.getFirst().addProp(Prop.remoteBoson);
-		for (int i = 0; i < 100; i++) {
+			players.getFirst().addProp(Prop.plunderCard);
+		for (int i = 0; i < 20; i++)
+			players.get(1).addProp(Prop.taxInspectionCard);
+		while (calendar.get(Calendar.YEAR) < 2017) {
 			Output.printString(SDF.format(calendar.getTime()));
-			players.stream().forEach(p -> {
-				this.event(p);
-			});
+			for (int i = 0; i < players.size(); i++)
+				this.event(players.get(i));
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		Output.inputClose();
 	}
@@ -65,9 +67,9 @@ public class Manager {
 				int propChoice;
 				while ((propChoice = Output.getProp(player.propToText())) >= 0) {
 					player.useProp(propChoice);
-					if (DiceFlag >= 0) {
-						map.event(player, DiceFlag);
-						DiceFlag = -1;
+					if (diceFlag >= 0) {
+						map.event(player, diceFlag);
+						diceFlag = -1;
 						return true;
 					}
 				}

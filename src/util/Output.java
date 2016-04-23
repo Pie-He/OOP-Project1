@@ -75,7 +75,7 @@ public class Output {
 		}
 		System.out.println();
 		// String reg = "^[0-" + (Prop.values().length - 1) + "xX]$";
-		String rs = getAndCheck("请输入您想要的卡片编号(输入x退出)", 0,
+		String rs = getAndCheck("请输入您想要的卡片编号(x-退出)", 0,
 				Prop.values().length - 1, "x", "h");
 		if (rs.equals("x")) {
 			return -1;
@@ -96,6 +96,14 @@ public class Output {
 		return saveMoney;
 	}
 
+	public static int getChoosePlayer(LinkedList<String> l) {
+		int[] index = { 0 };
+		l.stream().forEach(i -> {
+			System.out.printf("%d-%s\n", (index[0]++), i);
+		});
+		return getDistanceChoice("请输入玩家编号(x-取消)", 0, l.size() - 1);
+	}
+
 	public static boolean getYesOrNo(String str) {
 		return getAndCheck(str + "(0-取消	1-确定)", 0, 1) == 1;
 		// return Integer.parseInt(getAndCheck(str + "(0-取消	1-确定)", "^[0-1]$"))
@@ -113,8 +121,10 @@ public class Output {
 	}
 
 	public static int getDice() {
-		int dice = getAndCheck("请输入投掷的点数(0-取消):", 0, 6);
-		return dice;
+		String dice = getAndCheck("请输入投掷的点数(x-取消):", 1, 6, "x");
+		if (dice.equals("x"))
+			return 7;
+		return Integer.parseInt(dice);
 	}
 
 	public static void printString(String str) {

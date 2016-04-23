@@ -76,7 +76,6 @@ public class Map {
 		players.stream().forEach(item -> places[item.getPoi()].put(item));
 		//places[0].put(item);
 	}
-
 	//如果能继续移动返回true，否则返回false,当超越其他玩家时，图标覆盖问题
 	private boolean movePlayer(Player p){
 		int poi0=p.getPoi();

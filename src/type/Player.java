@@ -93,8 +93,8 @@ public class Player extends Removable {
 		return this.props.add(p);
 	}
 
-	public void removeProp(int index) {
-		this.props.remove(index);
+	public Prop removeProp(int index) {
+		return this.props.remove(index);
 	}
 
 	public void useProp(int index) {
@@ -112,6 +112,10 @@ public class Player extends Removable {
 		}
 		// return str.toString();
 		return strs;
+	}
+
+	public int getpropNum() {
+		return this.props.size();
 	}
 
 	public String getMessage() {
@@ -173,6 +177,12 @@ public class Player extends Removable {
 
 	}
 
+	public boolean isInView(Player p, int range) {
+		if (Math.abs(this.poi - p.poi) <= range
+				|| Math.abs(this.poi - p.poi) >= (Manager.map.mapLength - range))
+			return true;
+		return false;
+	}
 	/*
 	 * private class MyArray extends ArrayList<Prop> {
 	 * 
