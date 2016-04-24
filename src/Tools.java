@@ -19,7 +19,7 @@ import com.alibaba.fastjson.*;
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-		LinkedList<Player> l=new LinkedList<Player>();
+	/*	LinkedList<Player> l=new LinkedList<Player>();
 		l.add(new Player());
 		l.add(new Player());
 		l.add(new Player());
@@ -38,8 +38,14 @@ public class Tools {
         } 
 		System.out.println(is);
 		System.out.println(sdf.format(c.getTime()));
-		//for(int i=0;i<l.size();i++)
-			
+		//for(int i=0;i<l.size();i++)*/
+		String inputStr="s      dd    dd daf    ";
+		String s ="a b c";
+		inputStr.replace(" ", "");
+		String[] strs=inputStr.split(" +");
+		for(String st:strs){
+			System.out.println(st);
+		}
 		// writeMap();
 		/*
 		 * Player t = new Player("hpj", "ÈË", "µØ"); String str =

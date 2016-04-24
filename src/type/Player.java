@@ -15,6 +15,8 @@ public class Player extends Removable {
 	private int direction;
 	private ArrayList<Prop> props;
 	private PriorityQueue<House> houses;
+	private EnumMap<Stock, Integer> stocks = new EnumMap<Stock, Integer>(
+			Stock.class);
 
 	public Player() {
 		this.cash = 5000;
@@ -182,6 +184,22 @@ public class Player extends Removable {
 				|| Math.abs(this.poi - p.poi) >= (Manager.map.mapLength - range))
 			return true;
 		return false;
+	}
+
+	public void addStock(Stock stock, int num) {
+		int l = this.stocks.containsKey(stock) ? this.stocks.get(stock) : 0;
+		this.stocks.put(stock, l + num);
+	}
+
+	public void removeStock(Stock stock, int num) {
+		int l = this.stocks.containsKey(stock) ? this.stocks.get(stock) : 0;
+		this.stocks.put(stock, l - num);
+		if (stocks.get(stock) == 0)
+			stocks.remove(stock);
+	}
+
+	public int getStockAmount(Stock s){
+		return this.stocks.containsKey(s)?this.stocks.get(s):0;
 	}
 	/*
 	 * private class MyArray extends ArrayList<Prop> {

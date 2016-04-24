@@ -5,6 +5,7 @@ import java.util.*;
 
 import type.Player;
 import type.Prop;
+import type.Stock;
 
 public class Output {
 	private final static String[] MAINMENU = { "0-查看地图", "1-查看原始地图", "2-使用道具",
@@ -137,6 +138,47 @@ public class Output {
 				System.out.print(str[x][y]);
 			}
 			System.out.println();
+		}
+	}
+
+	public static int[] getStock(int[] amount) {
+		System.out.println("序号\t股票名\t\t单价\t\t涨跌幅\t\t持有数");
+		for (int i = 0; i < Stock.values().length; i++) {
+			System.out.println(i + "\t" + Stock.values()[i].getDescription()
+					+ "\t\t" + amount[i]);
+		}
+		System.out.println("请按以下格式输入：");
+		System.out
+				.println("输入b x n表示买入序号为x的股票n股,s x n表示卖出序号为x的股票的股票 n股,直接输入x-退出");
+		while (true) {
+			String inputStr = input.nextLine();
+			String[] strs = inputStr.split(" +");
+			int[] data = { -1, 0 };
+			if (strs[0].equals("x"))
+				return data;
+			if (strs.length != 3) {
+				System.out.println("输入错误");
+				continue;
+			}
+			if (!(InputCheck.check(strs[1], NUMBERREGULAR) && InputCheck.check(
+					strs[2], NUMBERREGULAR))) {
+				System.out.println("输入错误");
+				continue;
+			}
+			data[0] = Integer.parseInt(strs[1]);
+			if (data[0] >= 0 && data[0] < amount.length) {
+				System.out.println("输入错误");
+				continue;
+			}
+			if (strs[0].equals("s")) {
+				data[1] = -Integer.parseInt(strs[1]);
+			} else if (strs[0].equals("b")) {
+				data[1] = Integer.parseInt(strs[1]);
+			} else {
+				System.out.println("输入错误");
+				continue;
+			}
+			return data;
 		}
 	}
 

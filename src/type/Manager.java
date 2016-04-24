@@ -131,4 +131,14 @@ public class Manager {
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		return is;
 	}
+
+	private void stockMarket(Player player) {
+		int len = Stock.values().length;
+		int[] amount = new int[len];
+		for (int i = 0; i < len; i++) {
+			amount[i] = player.getStockAmount(Stock.values()[i]);
+		}
+		int[] data=Output.getStock(amount);
+		//¹ÉÆ±ÅÐ¶Ï
+	}
 }
