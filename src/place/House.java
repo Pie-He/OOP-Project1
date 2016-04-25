@@ -79,9 +79,9 @@ public class House extends Place implements Comparable<House> {
 
 	@Override
 	public String getDescription() {
-		return "类型" + this.getType() + "\n" + "名称" + name + "\n" + "初始价格"
-				+ this.initialPrice + "元" + "\n" + "当前等级" + this.level + "级"
-				+ "\n" + "拥有者"
+		return super.getDescription() + "\n" + "名称:" + name + "\n" + "初始价格:"
+				+ this.initialPrice + "元" + "\n" + "当前等级:" + this.level + "级"
+				+ "\n" + "拥有者:"
 				+ (this.owner == null ? "(可供出售状态)" : this.owner.getName())
 				+ "\n";
 	}
@@ -144,6 +144,7 @@ public class House extends Place implements Comparable<House> {
 			if (house == null) {
 				Manager.fail(p);
 			}
+			house.owner = null;
 			if ((fee -= house.getPrice()) <= 0) {
 				p.addCash(-fee);
 				break;

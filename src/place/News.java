@@ -88,10 +88,4 @@ public class News extends Place {
 						.reduce((x, y) -> x += (" " + y + " ")) + "½±Àø"
 				+ rewards + "Ôª");
 	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "ÀàĞÍ" + getType() + "\n";
-	}
 }

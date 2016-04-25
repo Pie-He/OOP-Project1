@@ -40,7 +40,7 @@ public class Manager {
 		 */
 		map.init(players);
 		for (int i = 0; i < 20; i++)
-			players.getFirst().addProp(Prop.plunderCard);
+			players.getFirst().addProp(Prop.remoteBoson);
 		for (int i = 0; i < 20; i++)
 			players.get(1).addProp(Prop.taxInspectionCard);
 		while (calendar.get(Calendar.YEAR) < 2017) {
@@ -50,6 +50,14 @@ public class Manager {
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 			for (Stock s : Stock.values()) {
 				s.change();
+			}
+			if (this.isMonthLast()) {
+				Output.printString("月底发放储金利息！！！");
+				players.stream().forEach(i -> {
+					int m = i.getDeposit() / 10;
+					Output.printString(i.getName() + "获得利息" + m);
+					i.addDeposit(m);
+				});
 			}
 		}
 		Output.inputClose();
@@ -73,6 +81,7 @@ public class Manager {
 					player.useProp(propChoice);
 					if (diceFlag >= 0) {
 						map.event(player, diceFlag);
+						Output.printStringArray2(map.toText());
 						diceFlag = -1;
 						return true;
 					}

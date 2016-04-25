@@ -26,9 +26,4 @@ public class Shop extends Place{
 				Output.printString("点券不足");
 		}		
 	}
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "类型"+getType()+"\n";
-	}
 }

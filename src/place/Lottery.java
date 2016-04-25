@@ -29,8 +29,4 @@ public class Lottery extends Place {
 		p.addCash(lottery);
 	}
 
-	@Override
-	public String getDescription() {
-		return "¿‡–Õ" + getType() + "\n";
-	}
 }

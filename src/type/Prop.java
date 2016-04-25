@@ -43,7 +43,7 @@ public enum Prop {
 
 	private boolean usePlunderCard(Player p) {
 		Player aim;
-		if ((aim = getChoosePlayer(p, 5)) == null)
+		if ((aim = getChoosePlayer(p, 5, false)) == null)
 			return false;
 		if (aim.getpropNum() <= 0) {
 			Output.printString(aim.getName() + "无道具！！！");
@@ -67,7 +67,7 @@ public enum Prop {
 
 	private boolean useTaxInspectionCard(Player p) {
 		Player aim;
-		if ((aim = getChoosePlayer(p, 5)) == null)
+		if ((aim = getChoosePlayer(p, 5, false)) == null)
 			return false;
 		Output.printString(aim.getName() + "缴交30%存款");
 		aim.addDeposit(-aim.getDeposit() * 3 / 10);
@@ -80,7 +80,11 @@ public enum Prop {
 	}
 
 	private boolean useReverseCard(Player p) {
-		p.reverse();
+		Player aim;
+		if ((aim = getChoosePlayer(p, 5, true)) == null)
+			return false;
+		Output.printString("对" + aim.getName() + "使用了转向卡");
+		aim.reverse();
 		return true;
 	}
 
@@ -104,14 +108,18 @@ public enum Prop {
 		return true;
 	}
 
-	private Player getChoosePlayer(Player p, int range) {
+	private Player getChoosePlayer(Player p, int range, boolean includeSelf) {
 		LinkedList<Player> l = new LinkedList<Player>();
 		LinkedList<String> strs = new LinkedList<String>();
 		Manager.players.stream().filter(i -> p.isInView(i, range))
 				.forEach(i -> {
-					l.add(i);
-					strs.add(i.getName());
-				});
+					// if(!includeSelf&&i==p)
+					// continue;
+						if (includeSelf || i != p) {
+							l.add(i);
+							strs.add(i.getName());
+						}
+					});
 		int choice = Output.getChoosePlayer(strs);
 		if (choice >= l.size()) {
 			return null;

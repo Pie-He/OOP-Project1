@@ -23,7 +23,9 @@ public abstract class Place {
 		this.type = type;
 	}
 
-	public abstract String getDescription();
+	public String getDescription(){
+		return "¿‡–Õ:" + getType() + "\n";
+	};
 
 	public void event(Player p){
 		Output.printString(this.getDescription());

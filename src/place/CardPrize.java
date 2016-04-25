@@ -18,9 +18,4 @@ public class CardPrize extends Place{
 		Output.printString("恭喜！获得“"+prop+"”1个！");
 		p.addProp(prop);
 	}
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "类型"+getType()+"\n";
-	}
 }

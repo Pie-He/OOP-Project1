@@ -11,6 +11,12 @@ public class Output {
 	private final static String[] MAINMENU = { "0-查看地图", "1-查看原始地图", "2-使用道具",
 			"3-查看10步十步以内示警", "4-查看前后指定步数的具体信息", "5-查看玩家的资产信息",
 			"6-想看的都看了，心满意足的扔骰子", "7-不玩了，认输", "8-股票" };
+	private final static String[] propHelp = {
+			"路障:可以在前后8步之内安放一个路障，任意玩家经过路障时会停在路障所在位置不能前行",
+			"遥控骰子:使用时可以任意控制骰子的结果，结果只能是1-6", "转向卡:使自己或距离自己五步以内的对手标掉转方向",
+			"滞留卡:该回合停留在原地，并再次触发原地事件",
+			"查税卡:强行将距离自己五步以内的对手30%的存款缴税(所缴税款并不给查税卡的发动者)", "均富卡:将所有人的现金平均分配",
+			"掠夺卡:距离自己五步以内的对手 随机将对手的一张卡牌据为己有" };
 	private final static String NUMBERREGULAR = "-?\\d+$";
 	private static Scanner input = new Scanner(System.in);
 
@@ -57,12 +63,15 @@ public class Output {
 		}
 		System.out.println();
 		// String reg = "^[0-" + (strs.size() - 1) + "xXhH]$";
-		String rs = getAndCheck("请输入您想要的卡片编号(输入h获得帮助，输入x返回上一层)", 0,
-				strs.size() - 1, "x", "h");
+		String rs;
+		while ((rs = getAndCheck("请输入您想要的卡片编号(输入h获得帮助，输入x返回上一层)", 0,
+				strs.size() - 1, "x", "h")).equals("h")) {
+			for (String str : propHelp)
+				System.out.println(str);
+			System.out.println();
+		}
 		if (rs.equals("x")) {
 			return -1;
-		} else if (rs.equals("h")) {
-			return -2;
 		} else {
 			return Integer.parseInt(rs);
 		}
@@ -76,8 +85,13 @@ public class Output {
 		}
 		System.out.println();
 		// String reg = "^[0-" + (Prop.values().length - 1) + "xX]$";
-		String rs = getAndCheck("请输入您想要的卡片编号(x-退出)", 0,
-				Prop.values().length - 1, "x", "h");
+		String rs;
+		while ((rs = getAndCheck("请输入您想要的卡片编号(输入h获得帮助，输入x返回上一层)", 0,
+				Prop.values().length - 1, "x", "h")).equals("h")) {
+			for (String str : propHelp)
+				System.out.println(str);
+			System.out.println();
+		}
 		if (rs.equals("x")) {
 			return -1;
 		} else if (rs.equals("h")) {
@@ -88,9 +102,10 @@ public class Output {
 	}
 
 	public static int getSaveOrDrawMoney() {
-		int choice = getAndCheck("0-退出	1-取钱	2-存钱\n请选择:", 0, 2);
-		if (choice == 0)
+		String choiceStr = getAndCheck("x-退出	1-取钱	2-存钱\n请选择:", 0, 2,"x");
+		if(choiceStr.equals("x"))
 			return 0;
+		int choice=Integer.parseInt(choiceStr);
 		int saveMoney = getAndCheck("请输入需要存/取的数目:", 0, Integer.MAX_VALUE);
 		if (choice == 1)
 			saveMoney = -saveMoney;
@@ -98,6 +113,10 @@ public class Output {
 	}
 
 	public static int getChoosePlayer(LinkedList<String> l) {
+		if (l.size() == 0) {
+			System.out.println("无目标");
+			return 0;
+		}
 		int[] index = { 0 };
 		l.stream().forEach(i -> {
 			System.out.printf("%d-%s\n", (index[0]++), i);
@@ -164,7 +183,7 @@ public class Output {
 				System.out.println("输入错误");
 				continue;
 			}
-			//System.out.println(strs.length + strs[0]);
+			// System.out.println(strs.length + strs[0]);
 			if (strs[0].equals("s")) {
 				data[0] = 1;
 			} else if (strs[0].equals("b")) {

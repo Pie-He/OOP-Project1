@@ -17,9 +17,4 @@ public class Coupon extends Place{
 		Output.printString("恭喜！获得 "+coupon+"点券！");
 		p.addCoupon(coupon);
 	}
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "类型"+getType()+"\n";
-	}
 }

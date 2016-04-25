@@ -13,8 +13,4 @@ public class Space extends Place{
 	public void event(Player p) {
 		super.event(p);		
 	}
-	@Override
-	public String getDescription() {
-		return "¿‡–Õ:"+getType()+"\n";
-	}
 }
