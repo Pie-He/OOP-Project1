@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import util.Output;
+import util.Tools;
 
 public class Manager {
 	public static LinkedList<Player> players;
@@ -47,12 +48,15 @@ public class Manager {
 			for (int i = 0; i < players.size(); i++)
 				this.event(players.get(i));
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
+			for (Stock s : Stock.values()) {
+				s.change();
+			}
 		}
 		Output.inputClose();
 	}
 
 	private boolean event(Player player) {
-		Output.printString("现在是玩家“" + player.getName() + "”操作时间，您的前进方向是"
+		Output.printString("现在是玩家\"" + player.getName() + "\"操作时间，您的前进方向是"
 				+ ((player.getDirection() > 0) ? "顺时针" : "逆时针"));
 		while (true) {
 			int choice = Output.getMenuChoice();
@@ -84,7 +88,8 @@ public class Manager {
 				Output.printString(map.getDescription(player.getPrePoi(dis)));
 				break;
 			case 5:
-				Output.printString("玩家名\t\t点券\t\t现金\t\t存款\t\t房产\t\t资产总额");
+				Output.printString(Tools.stringCover(16, "Name", "Coupon",
+						"Cash", "Deposit", "House Property", "Total Property"));
 				for (Player p : players)
 					Output.printString(p.getMessage());
 				break;
@@ -98,6 +103,7 @@ public class Manager {
 				player.fail();
 				return false;
 			case 8:
+				stockMarket(player);
 				break;
 			}
 		}
@@ -133,12 +139,21 @@ public class Manager {
 	}
 
 	private void stockMarket(Player player) {
-		int len = Stock.values().length;
-		int[] amount = new int[len];
-		for (int i = 0; i < len; i++) {
-			amount[i] = player.getStockAmount(Stock.values()[i]);
+		while (true) {
+			int len = Stock.values().length;
+			int[] amount = new int[len];
+			for (int i = 0; i < len; i++) {
+				amount[i] = player.getStockAmount(Stock.values()[i]);
+			}
+			int[] data = Output.getStock(amount);// 0-b or s 1-which stock
+													// 2-amount
+			// 股票判断
+			if (data[0] < 0)
+				return;
+			if (data[0] == 0)
+				Stock.values()[data[1]].buyStock(player, data[2]);
+			else
+				Stock.values()[data[1]].sellStock(player, data[2]);
 		}
-		int[] data=Output.getStock(amount);
-		//股票判断
 	}
 }

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import place.House;
+import util.Tools;
 
 public class Player extends Removable {
 	private String name;
@@ -121,17 +122,17 @@ public class Player extends Removable {
 	}
 
 	public String getMessage() {
-		String str = this.getName()
-				+ "\t\t"
-				+ this.getCoupon()
-				+ "\t\t"
-				+ this.getCash()
-				+ "\t\t"
-				+ this.getDeposit()
-				+ "\t\t"
-				+ this.getHouseProperty()
-				+ "\t\t"
-				+ (this.getCash() + this.getDeposit() + this.getHouseProperty());
+		String str = Tools.stringCover(16, this.name, this.coupon + "",
+				this.cash + "", this.deposit + "",
+				this.getHouseProperty() + "",
+				(this.getCash() + this.getDeposit() + this.getHouseProperty())
+						+ "");
+		/*
+		 * String str = this.getName() + "\t\t" + this.getCoupon() + "\t\t" +
+		 * this.getCash() + "\t\t" + this.getDeposit() + "\t\t" +
+		 * this.getHouseProperty() + "\t\t" + (this.getCash() +
+		 * this.getDeposit() + this.getHouseProperty());
+		 */
 		return str;
 	}
 
@@ -191,15 +192,18 @@ public class Player extends Removable {
 		this.stocks.put(stock, l + num);
 	}
 
-	public void removeStock(Stock stock, int num) {
+	public boolean removeStock(Stock stock, int num) {
 		int l = this.stocks.containsKey(stock) ? this.stocks.get(stock) : 0;
+		if (num > l)
+			return false;
 		this.stocks.put(stock, l - num);
 		if (stocks.get(stock) == 0)
 			stocks.remove(stock);
+		return true;
 	}
 
-	public int getStockAmount(Stock s){
-		return this.stocks.containsKey(s)?this.stocks.get(s):0;
+	public int getStockAmount(Stock s) {
+		return this.stocks.containsKey(s) ? this.stocks.get(s) : 0;
 	}
 	/*
 	 * private class MyArray extends ArrayList<Prop> {
