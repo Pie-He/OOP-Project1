@@ -3,7 +3,7 @@ package place;
 import java.util.*;
 
 import type.*;
-import util.Output;
+import util.IO;
 
 public abstract class Place {
 	private int x;
@@ -27,8 +27,9 @@ public abstract class Place {
 		return "¿‡–Õ:" + getType() + "\n";
 	};
 
-	public void event(Player p){
-		Output.printString(this.getDescription());
+	public boolean event(Player p){
+		IO.printString(this.getDescription());
+		return true;
 	};
 
 	

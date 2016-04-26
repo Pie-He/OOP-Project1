@@ -2,7 +2,7 @@ package place;
 
 import type.Player;
 import type.Prop;
-import util.Output;
+import util.IO;
 
 public class Shop extends Place{
 	public Shop(){
@@ -12,18 +12,19 @@ public class Shop extends Place{
 		super(x,y,symbol,"商店");
 	}
 	@Override
-	public void event(Player p) {
+	public boolean event(Player p) {
 		super.event(p);
 		while(true){
-			int choice=Output.getBuyProp();
-			Output.printString("您有"+p.getCoupon()+"点券");
+			IO.printString("您有"+p.getCoupon()+"点券");
+			int choice=IO.getBuyProp();
 			if(choice<0)
 				break;
 			Prop prop=Prop.values()[choice];
 			if(p.addCoupon(-prop.getPrice()))
 				p.addProp(prop);
 			else
-				Output.printString("点券不足");
+				IO.printString("点券不足");
 		}		
+		return true;
 	}
 }

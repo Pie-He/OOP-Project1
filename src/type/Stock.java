@@ -1,6 +1,6 @@
 package type;
 
-import util.Output;
+import util.IO;
 import util.Tools;
 
 public enum Stock {
@@ -60,13 +60,13 @@ public enum Stock {
 			player.addStock(this, amount);
 			return;
 		}
-		Output.printString("金钱不够!!!");
+		IO.printString("金钱不够!!!");
 	}
 
 	public void sellStock(Player player, int amount) {
 		int total = amount * this.price;
 		if (!player.removeStock(this, amount)) {
-			Output.printString("股票数输入有误！！！");
+			IO.printString("股票数输入有误！！！");
 		}
 		player.addDeposit(total);
 	}

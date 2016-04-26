@@ -1,7 +1,7 @@
 package place;
 
 import type.Player;
-import util.Output;
+import util.IO;
 
 public class Coupon extends Place{
 	public Coupon(){
@@ -11,10 +11,11 @@ public class Coupon extends Place{
 		super(x,y,symbol,"赠送点券点");
 	}
 	@Override
-	public void event(Player p) {
+	public boolean event(Player p) {
 		super.event(p);
-		int coupon=((int)(Math.random()*6)*5+5);
-		Output.printString("恭喜！获得 "+coupon+"点券！");
+		int coupon=((int)(Math.random()*20)*5+5);
+		IO.printString("恭喜！获得 "+coupon+"点券！");
 		p.addCoupon(coupon);
+		return true;
 	}
 }

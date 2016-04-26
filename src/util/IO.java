@@ -2,12 +2,12 @@ package util;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import type.Player;
-import type.Prop;
-import type.Stock;
+import type.*;
 
-public class Output {
+public class IO {
 	private final static String[] MAINMENU = { "0-查看地图", "1-查看原始地图", "2-使用道具",
 			"3-查看10步十步以内示警", "4-查看前后指定步数的具体信息", "5-查看玩家的资产信息",
 			"6-想看的都看了，心满意足的扔骰子", "7-不玩了，认输", "8-股票" };
@@ -17,21 +17,18 @@ public class Output {
 			"滞留卡:该回合停留在原地，并再次触发原地事件",
 			"查税卡:强行将距离自己五步以内的对手30%的存款缴税(所缴税款并不给查税卡的发动者)", "均富卡:将所有人的现金平均分配",
 			"掠夺卡:距离自己五步以内的对手 随机将对手的一张卡牌据为己有" };
-	private final static String NUMBERREGULAR = "-?\\d+$";
 	private static Scanner input = new Scanner(System.in);
 
 	public static int getPlayerNumber() {
 		return getAndCheck("请输入玩家人数(2-4):", 2, 4);
 	}
 
-	public static Deque<String> getPlayerName(int number) {
+	public static Collection<String> getPlayerName(int number) {
 		Deque<String> players = new LinkedList<String>();
 		for (int i = 0; i < number; i++) {
 			String name = getAndCheck("请输入玩家" + (i + 1) + "名字(数字、字母、下划线):",
 					"^\\w+$");
 			players.add(name);
-			// players.add(new Player(name, PLSYMBOL[i], HSSYMBOL[i]));
-			// System.out.println(player.getDescription());
 		}
 		return players;
 	}
@@ -79,9 +76,8 @@ public class Output {
 
 	public static int getBuyProp() {
 		for (int i = 0; i < Prop.values().length; i++) {
-			System.out.printf("%d-%s  ", i, Prop.values()[i].toText());
-			if (i % 5 == 4)
-				System.out.println();
+			System.out.printf("%d-%s  %s\n", i, Prop.values()[i].toText(),
+					+Prop.values()[i].getPrice() + "点券");
 		}
 		System.out.println();
 		// String reg = "^[0-" + (Prop.values().length - 1) + "xX]$";
@@ -102,10 +98,10 @@ public class Output {
 	}
 
 	public static int getSaveOrDrawMoney() {
-		String choiceStr = getAndCheck("x-退出	1-取钱	2-存钱\n请选择:", 0, 2,"x");
-		if(choiceStr.equals("x"))
+		String choiceStr = getAndCheck("x-退出	1-取钱	2-存钱\n请选择:", 1, 2, "x");
+		if (choiceStr.equals("x"))
 			return 0;
-		int choice=Integer.parseInt(choiceStr);
+		int choice = Integer.parseInt(choiceStr);
 		int saveMoney = getAndCheck("请输入需要存/取的数目:", 0, Integer.MAX_VALUE);
 		if (choice == 1)
 			saveMoney = -saveMoney;
@@ -192,8 +188,7 @@ public class Output {
 				System.out.println("输入错误");
 				continue;
 			}
-			if (!(InputCheck.check(strs[1], NUMBERREGULAR) && InputCheck.check(
-					strs[2], NUMBERREGULAR))) {
+			if (!(checkInteger(strs[1]) && checkInteger(strs[2]))) {
 				System.out.println("输入错误");
 				continue;
 			}
@@ -211,21 +206,11 @@ public class Output {
 		input.close();
 	}
 
-	private static String getAndCheck(String regular) {
-		while (true) {
-			String inputStr = input.nextLine();
-			if (InputCheck.check(inputStr, regular)) {
-				return inputStr;
-			}
-			System.out.println("输入错误");
-		}
-	}
-
 	private static int getAndCheck(String message, int lb, int ub) {
 		while (true) {
 			System.out.println(message);
 			String inputStr = input.nextLine();
-			if (InputCheck.check(inputStr, NUMBERREGULAR)) {
+			if (checkInteger(inputStr)) {
 				int rs = Integer.parseInt(inputStr);
 				if (rs >= lb && rs <= ub)
 					return rs;
@@ -243,7 +228,7 @@ public class Output {
 				if (inputStr.equals(str))
 					return inputStr;
 			}
-			if (InputCheck.check(inputStr, NUMBERREGULAR)) {
+			if (checkInteger(inputStr)) {
 				int rs = Integer.parseInt(inputStr);
 				if (rs >= lb && rs <= up)
 					return String.valueOf(rs);
@@ -256,17 +241,22 @@ public class Output {
 		while (true) {
 			System.out.println(message);
 			String inputStr = input.nextLine();
-			if (InputCheck.check(inputStr, regular)) {
+			if (check(inputStr, regular)) {
 				return inputStr;
 			}
 			System.out.println("输入错误," + message);
 		}
 	}
 
-	/*
-	 * private static String getAndCheck(String message, String regular, String
-	 * returnMessage) { String rs = getAndCheck(message, regular);
-	 * System.out.println(returnMessage); return rs; }
-	 */
+	private static boolean checkInteger(String input) {
+		Pattern pattern = Pattern.compile("^[+-]?[0-9]+$");
+		Matcher matcher = pattern.matcher(input);
+		return matcher.matches();
+	}
 
+	private static boolean check(String inputStr, String regular) {
+		Pattern pattern = Pattern.compile(regular);
+		Matcher matcher = pattern.matcher(inputStr);
+		return matcher.matches();
+	}
 }

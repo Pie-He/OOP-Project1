@@ -20,7 +20,7 @@ public class Player extends Removable {
 			Stock.class);
 
 	public Player() {
-		this.cash = 5000;
+		this.cash = 800;
 		this.deposit = 0;
 		this.coupon = 0;
 		this.props = new ArrayList<Prop>(20);

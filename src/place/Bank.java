@@ -13,21 +13,22 @@ public class Bank extends Place {
 	}
 
 	@Override
-	public void event(Player p) {
+	public boolean event(Player p) {
 		super.event(p);
-		Output.printString("您的现金:" + p.getCash() + " 您的银行存款:" + p.getDeposit());
-		int money = Output.getSaveOrDrawMoney();// 正：存钱 负：取钱
+		IO.printString("您的现金:" + p.getCash() + " 您的银行存款:" + p.getDeposit());
+		int money = IO.getSaveOrDrawMoney();// 正：存钱 负：取钱
 		if (money == 0)
-			return;
+			return true;
 		if (!p.addCash(-money)) {
-			Output.printString("现金不足");
-			return;
+			IO.printString("现金不足");
+			return true;
 		}
 		if (!p.addDeposit(money)) {
-			Output.printString("存款余额不足");
-			return;
+			IO.printString("存款余额不足");
+			return true;
 		}
-		Output.printString("存/取款成功");
+		IO.printString("存/取款成功");
+		return true;
 	}
 
 }

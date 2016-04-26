@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import type.Manager;
 import type.Player;
 import type.Prop;
-import util.Output;
+import util.IO;
 
 public class News extends Place {
 	public News() {
@@ -19,7 +19,7 @@ public class News extends Place {
 	}
 
 	@Override
-	public void event(Player p) {
+	public boolean event(Player p) {
 		// TODO Auto-generated method stub
 		super.event(p);
 		int random = (int) (Math.random() * 5);// 获得0~4随机数
@@ -35,13 +35,13 @@ public class News extends Place {
 		case 2: {
 			Manager.players.stream()
 					.map(i -> i.addDeposit(i.getDeposit() / 10));
-			Output.printString("银行加发储金红利每个人得到存款10%");
+			IO.printString("银行加发储金红利每个人得到存款10%");
 			break;
 		}
 		case 3: {
 			Manager.players.stream().map(
 					i -> i.addDeposit(-i.getDeposit() / 10));
-			Output.printString("所有人缴纳财产税10%");
+			IO.printString("所有人缴纳财产税10%");
 			break;
 		}
 		case 4: {
@@ -49,17 +49,18 @@ public class News extends Place {
 			break;
 		}
 		}
+		return true;
 	}
 
 	private void news4() {
 		// TODO Auto-generated method stub
-		Output.printString("每个人得到一张卡片");
+		IO.printString("每个人得到一张卡片");
 		Manager.players.stream().forEach(
 				i -> {
 					int random = (int) (Math.random() * Prop.values().length);
 					Prop prop = Prop.values()[random];
 					i.addProp(prop);
-					Output.printString("恭喜！" + i.getName() + "获得“"
+					IO.printString("恭喜！" + i.getName() + "获得“"
 							+ prop.toText() + "”1个！");
 				});
 	}
@@ -83,9 +84,9 @@ public class News extends Place {
 
 		Manager.players.stream().filter(i -> i.getHouseAmount() == tmp)
 				.forEach(pls::add);
-		Output.printString(str
+		IO.printString(str
 				+ pls.stream().map(i -> i.getName())
-						.reduce((x, y) -> x += (" " + y + " ")) + "奖励"
+						.reduce((x, y) -> x += (" " + y + " ")).get() + "奖励"
 				+ rewards + "元");
 	}
 }

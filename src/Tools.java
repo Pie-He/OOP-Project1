@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import type.Manager;
 import type.Player;
 import type.Prop;
-import util.Output;
+import util.IO;
 import place.*;
 
 import com.alibaba.fastjson.*;

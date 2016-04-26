@@ -2,7 +2,7 @@ package place;
 
 import type.Manager;
 import type.Player;
-import util.Output;
+import util.IO;
 
 public class House extends Place implements Comparable<House> {
 	// private int price;
@@ -87,15 +87,16 @@ public class House extends Place implements Comparable<House> {
 	}
 
 	@Override
-	public void event(Player p) {
+	public boolean event(Player p) {
 		super.event(p);
 		if (this.owner == null) {
 			this.sell(p);
 		} else if (this.owner == p) {
 			this.levelUp();
 		} else {
-			this.charge(p);
+			return this.charge(p);
 		}
+		return true;
 	}
 
 	public void destroy() {
@@ -103,50 +104,52 @@ public class House extends Place implements Comparable<House> {
 	}
 
 	private void sell(Player p) {
-		if (!Output.getYesOrNo("是否需要购买？"))
+		if (!IO.getYesOrNo("是否需要购买？"))
 			return;
 		if (!p.addCash(-this.getPrice())) {
-			Output.printString("现金不足！！！");
+			IO.printString("现金不足！！！");
 			return;
 		}
 		p.addHouse(this);
 		this.owner = p;
-		Output.printString("购地成功！！！");
+		IO.printString("购地成功！！！");
 	}
 
 	private void levelUp() {
 		if (this.level >= MAXLEVEL) {
-			Output.printString("已最高级！！！");
+			IO.printString("已最高级！！！");
 			return;
 		}
-		if (!Output.getYesOrNo("是否需要升级？"))
+		if (!IO.getYesOrNo("是否需要升级？"))
 			return;
 		if (!owner.addCash(-this.initialPrice / 2)) {
-			Output.printString("现金不足！！！");
+			IO.printString("现金不足！！！");
 			return;
 		}
 		this.level++;
-		Output.printString("升级成功！！！");
+		IO.printString("升级成功！！！");
 	}
 
-	private void charge(Player p) {
+	private boolean charge(Player p) {
 		int fee = this.getFee();
-		Output.printString("缴交过路费" + fee + "元给" + owner.getName());
+		IO.printString("缴交过路费" + fee + "元给" + owner.getName());
 		owner.addCash(fee);
 		if (p.addCash(-fee))
-			return;
-		Output.printString("现金不足，银行存款抵扣！");
+			return true;
+		IO.printString("现金不足，银行存款抵扣！");
 		fee -= p.getCash();
 		p.setCash(0);
 		if (p.addDeposit(-fee))
-			return;
-		Output.printString("银行存款不足，变卖土地抵扣！");
+			return true;
+		IO.printString("银行存款不足，变卖土地抵扣！");
 		fee -= p.getDeposit();
 		p.setDeposit(0);
-		while (fee <= 0) {
+		while (fee > 0) {
 			House house = p.sellHouse();
 			if (house == null) {
+				owner.addCash(-fee);
 				Manager.getInstance().fail(p);
+				return false;
 			}
 			house.owner = null;
 			if ((fee -= house.getPrice()) <= 0) {
@@ -154,6 +157,7 @@ public class House extends Place implements Comparable<House> {
 				break;
 			}
 		}
+		return true;
 	}
 
 	private int getFee() {

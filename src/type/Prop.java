@@ -2,7 +2,7 @@ package type;
 
 import java.util.LinkedList;
 
-import util.Output;
+import util.IO;
 
 public enum Prop {
 	roadBlock("路障", 15), remoteBoson("遥控骰子", 30), reverseCard("转向卡", 15), stopCard(
@@ -46,19 +46,19 @@ public enum Prop {
 		if ((aim = getChoosePlayer(p, 5, false)) == null)
 			return false;
 		if (aim.getpropNum() <= 0) {
-			Output.printString(aim.getName() + "无道具！！！");
+			IO.printString(aim.getName() + "无道具！！！");
 			return false;
 		}
 		int random = (int) (Math.random() * aim.getpropNum());
 		Prop prop = aim.removeProp(random);
 		p.addProp(prop);
-		Output.printString(aim.getName() + "失去一张" + prop.name);
-		Output.printString(p.getName() + "获得一张" + prop.name);
+		IO.printString(aim.getName() + "失去一张" + prop.name);
+		IO.printString(p.getName() + "获得一张" + prop.name);
 		return true;
 	}
 
 	private boolean useAverageRichCard(Player p) {
-		Output.printString("所有人现金平分使用");
+		IO.printString("所有人现金平分使用");
 		int all = Manager.players.stream().mapToInt(i -> i.getCash()).sum();
 		Manager.players.stream().forEach(
 				i -> i.setCash(all / Manager.players.size()));
@@ -69,7 +69,7 @@ public enum Prop {
 		Player aim;
 		if ((aim = getChoosePlayer(p, 5, false)) == null)
 			return false;
-		Output.printString(aim.getName() + "缴交30%存款");
+		IO.printString(aim.getName() + "缴交30%存款");
 		aim.addDeposit(-aim.getDeposit() * 3 / 10);
 		return true;
 	}
@@ -83,13 +83,13 @@ public enum Prop {
 		Player aim;
 		if ((aim = getChoosePlayer(p, 5, true)) == null)
 			return false;
-		Output.printString("对" + aim.getName() + "使用了转向卡");
+		IO.printString("对" + aim.getName() + "使用了转向卡");
 		aim.reverse();
 		return true;
 	}
 
 	private boolean useRemoteBoson(Player p) {
-		int dice = Output.getDice();
+		int dice = IO.getDice();
 		if (dice > 6)
 			return false;
 		Manager.diceFlag = dice;
@@ -97,12 +97,12 @@ public enum Prop {
 	}
 
 	private boolean useRoadBlock(Player p) {
-		int dis = Output.getDistanceChoice("请输入前后方8格内的数字(负数表示后方,x-取消)", -8, 8);
+		int dis = IO.getDistanceChoice("请输入前后方8格内的数字(负数表示后方,x-取消)", -8, 8);
 		if (dis > 8)
 			return false;
 		int poi = p.getPrePoi(dis);
 		if (!Map.getInstance().addBlock(new RoadBlock(poi))) {
-			Output.printString("该位置已放置路障");
+			IO.printString("该位置已放置路障");
 			return false;
 		}
 		return true;
@@ -120,7 +120,7 @@ public enum Prop {
 							strs.add(i.getName());
 						}
 					});
-		int choice = Output.getChoosePlayer(strs);
+		int choice = IO.getChoosePlayer(strs);
 		if (choice >= l.size()) {
 			return null;
 		}

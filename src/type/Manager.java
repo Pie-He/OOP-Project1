@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import util.Output;
+import util.IO;
 import util.Tools;
 
 public class Manager {
@@ -31,15 +31,15 @@ public class Manager {
 	private Calendar calendar = Calendar.getInstance();
 
 	public void start() throws IOException {
-		int playerNum = Output.getPlayerNumber();
+		int playerNum = IO.getPlayerNumber();
 		int index = 0;
 		players = new LinkedList<Player>();
-		for (String name : Output.getPlayerName(playerNum)) {
+		for (String name : IO.getPlayerName(playerNum)) {
 			players.add(new Player(name, PLSYMBOL[index], HSSYMBOL[index++]));
 		}
 		calendar.set(2016, 0, 1);
 		// News.news4();
-		Output.getReady();
+		IO.getReady();
 		/*
 		 * // Player player = Manager.players.pop(); //Player player = new
 		 * Player(); players.add(player); player.addProp(Prop.averageRichCard);
@@ -50,59 +50,67 @@ public class Manager {
 		map.init(players);
 		for (int i = 0; i < 20; i++)
 			players.getFirst().addProp(Prop.remoteBoson);
-		for (int i = 0; i < 20; i++)
-			players.get(1).addProp(Prop.taxInspectionCard);
-		while (calendar.get(Calendar.YEAR) < 2017) {
-			Output.printString(SDF.format(calendar.getTime()));
-			for (int i = 0; i < players.size(); i++) {
-				if (!this.event(players.get(i))) {
-					players.remove(i);
-					i--;
+		for (int i = 0; i < 20; i++) {
+			players.get(1).addProp(Prop.remoteBoson);
+			players.get(1).addProp(Prop.stopCard);
+		}
+		EVENT: {
+			while (calendar.get(Calendar.YEAR) < 2017) {
+				IO.printString(SDF.format(calendar.getTime()));
+				for (int i = 0; i < players.size(); i++) {
+					if (!this.event(players.get(i))) {
+						players.remove(i);
+						i--;
+					}
+					if (players.size() == 1) {
+						IO.printString("游戏结束，" + players.peek().getName()
+								+ "获胜！！！");
+						break EVENT;
+					}
 				}
-
-			}
-			calendar.add(Calendar.DAY_OF_MONTH, 1);
-			for (Stock s : Stock.values()) {
-				s.change();
-			}
-			if (this.isMonthLast()) {
-				Output.printString("月底发放储金利息！！！");
-				players.stream().forEach(i -> {
-					int m = i.getDeposit() / 10;
-					Output.printString(i.getName() + "获得利息" + m);
-					i.addDeposit(m);
-				});
+				for (Stock s : Stock.values()) {
+					s.change();
+				}
+				if (this.isMonthLast()) {
+					IO.printString("月底发放储金利息！！！");
+					players.stream().forEach(i -> {
+						int m = i.getDeposit() / 10;
+						IO.printString(i.getName() + "获得利息" + m);
+						i.addDeposit(m);
+					});
+				}
+				calendar.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
-		Output.inputClose();
+		IO.inputClose();
 	}
 
 	public void fail(Player p) {
-		Output.printString(p.getName() + "失败！");
+		IO.printString(p.getName() + "失败！");
 		p.fail();
 	}
 
 	private boolean event(Player player) {
-		Output.printString("现在是玩家\"" + player.getName() + "\"操作时间，您的前进方向是"
+		IO.printString("现在是玩家\"" + player.getName() + "\"操作时间，您的前进方向是"
 				+ ((player.getDirection() > 0) ? "顺时针" : "逆时针"));
 		while (true) {
-			int choice = Output.getMenuChoice();
+			int choice = IO.getMenuChoice();
 			switch (choice) {
 			case 0:
-				Output.printStringArray2(map.toText());
+				IO.printStringArray2(map.toText());
 				break;
 			case 1:
-				Output.printStringArray2(map.getInitalMap());
+				IO.printStringArray2(map.getInitalMap());
 				break;
 			case 2:
 				int propChoice;
-				while ((propChoice = Output.getProp(player.propToText())) >= 0) {
+				while ((propChoice = IO.getProp(player.propToText())) >= 0) {
 					player.useProp(propChoice);
 					if (diceFlag >= 0) {
-						map.event(player, diceFlag);
-						Output.printStringArray2(map.toText());
+						boolean is = map.event(player, diceFlag);
+						IO.printStringArray2(map.toText());
 						diceFlag = -1;
-						return true;
+						return is;
 					}
 				}
 				break;
@@ -110,23 +118,23 @@ public class Manager {
 				warning(player);
 				break;
 			case 4:
-				int dis = Output.getDistanceChoice(
+				int dis = IO.getDistanceChoice(
 						"请输入您想查询的点与您相差的步数(后方用负数表示，x-退出)", -map.mapLength,
 						map.mapLength);
-				Output.printString(map.getDescription(player.getPrePoi(dis)));
+				IO.printString(map.getDescription(player.getPrePoi(dis)));
 				break;
 			case 5:
-				Output.printString(Tools.stringCover(16, "Name", "Coupon",
+				IO.printString(Tools.stringCover(16, "Name", "Coupon",
 						"Cash", "Deposit", "House Property", "Total Property"));
 				for (Player p : players)
-					Output.printString(p.getMessage());
+					IO.printString(p.getMessage());
 				break;
 			case 6:
 				int dice = this.randomDice();
-				Output.printString("投掷点数:" + dice);
-				map.event(player, dice);
-				Output.printStringArray2(map.toText());
-				return true;
+				IO.printString("投掷点数:" + dice);
+				boolean is = map.event(player, dice);
+				IO.printStringArray2(map.toText());
+				return is;
 			case 7:
 				player.fail();
 				return false;
@@ -143,9 +151,9 @@ public class Manager {
 			if (map.isBlock(player.getPrePoi(i)))
 				l.add(i);
 		}
-		l.stream().forEach(i -> Output.printString("前方" + i + "步有路障！！！"));
+		l.stream().forEach(i -> IO.printString("前方" + i + "步有路障！！！"));
 		if (l.size() == 0)
-			Output.printString("前方无路障");
+			IO.printString("前方无路障");
 	}
 
 	private int randomDice() {
@@ -169,7 +177,7 @@ public class Manager {
 			for (int i = 0; i < len; i++) {
 				amount[i] = player.getStockAmount(Stock.values()[i]);
 			}
-			int[] data = Output.getStock(amount);// 0-b or s 1-which stock
+			int[] data = IO.getStock(amount);// 0-b or s 1-which stock
 													// 2-amount
 			// 股票判断
 			if (data[0] < 0)

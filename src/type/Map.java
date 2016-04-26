@@ -46,13 +46,14 @@ public class Map {
 		return this.staticMap;
 	}
 
-	public void event(Player player, int dice) {
+	public boolean event(Player player, int dice) {
 		for (int i = 0; i < dice; i++) {
 			if (!movePlayer(player))
-				return;
+				return true;
 		}
 		if (!(places.get(player.getPoi()) instanceof Bank))
-			places.get(player.getPoi()).event(player);
+			return places.get(player.getPoi()).event(player);
+		return true;
 	}
 
 	public boolean addBlock(RoadBlock r) {
