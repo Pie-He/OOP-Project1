@@ -71,6 +71,9 @@ public class Map {
 		return places.get(poi).getDescription();
 	}
 
+	public void removePlayer(Player player){
+		places.get(player.getPoi()).remove(player);
+	}
 	public void init(Collection<Player> players) {
 		places.stream().forEach(p -> {
 			int x = p.getX();

@@ -101,7 +101,7 @@ public enum Prop {
 		if (dis > 8)
 			return false;
 		int poi = p.getPrePoi(dis);
-		if (!Manager.map.addBlock(new RoadBlock(poi))) {
+		if (!Map.getInstance().addBlock(new RoadBlock(poi))) {
 			Output.printString("该位置已放置路障");
 			return false;
 		}

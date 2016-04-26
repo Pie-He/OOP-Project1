@@ -18,10 +18,8 @@ public class Player extends Removable {
 	private PriorityQueue<House> houses;
 	private EnumMap<Stock, Integer> stocks = new EnumMap<Stock, Integer>(
 			Stock.class);
-	private boolean valid;
 
 	public Player() {
-		valid = true;
 		this.cash = 5000;
 		this.deposit = 0;
 		this.coupon = 0;
@@ -139,8 +137,8 @@ public class Player extends Removable {
 	}
 
 	public int walk() {
-		this.poi = (this.poi + this.direction + Manager.map.mapLength)
-				% Manager.map.mapLength;
+		this.poi = (this.poi + this.direction +Map.getInstance().mapLength)
+				%Map.getInstance().mapLength;
 		return this.poi;
 	}
 
@@ -153,8 +151,8 @@ public class Player extends Removable {
 	}
 
 	public int getPrePoi(int dis) {
-		return (this.poi + this.direction * dis + Manager.map.mapLength)
-				% Manager.map.mapLength;
+		return (this.poi + this.direction * dis + Map.getInstance().mapLength)
+				% Map.getInstance().mapLength;
 	}
 
 	public int getHouseAmount() {
@@ -180,7 +178,7 @@ public class Player extends Removable {
 
 	public boolean isInView(Player p, int range) {
 		if (Math.abs(this.poi - p.poi) <= range
-				|| Math.abs(this.poi - p.poi) >= (Manager.map.mapLength - range))
+				|| Math.abs(this.poi - p.poi) >= (Map.getInstance().mapLength - range))
 			return true;
 		return false;
 	}
@@ -214,11 +212,6 @@ public class Player extends Removable {
 		this.deposit = 0;
 		this.props.clear();
 		this.name += "(failed)";
-		valid = false;
-	}
-
-	public boolean valid() {
-		return this.valid;
 	}
 	/*
 	 * private class MyArray extends ArrayList<Prop> {

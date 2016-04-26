@@ -26,7 +26,7 @@ public class Manager {
 	 */
 	final private static SimpleDateFormat SDF = new SimpleDateFormat(
 			"今天是yyyy年MM月dd日");
-	static Map map = Map.getInstance();
+	private Map map = Map.getInstance();
 	static int diceFlag = -1;
 	private Calendar calendar = Calendar.getInstance();
 
@@ -54,10 +54,13 @@ public class Manager {
 			players.get(1).addProp(Prop.taxInspectionCard);
 		while (calendar.get(Calendar.YEAR) < 2017) {
 			Output.printString(SDF.format(calendar.getTime()));
-			players.stream().forEach(player -> {
-				if (player.valid())
-					this.event(player);
-			});
+			for (int i = 0; i < players.size(); i++) {
+				if (!this.event(players.get(i))) {
+					players.remove(i);
+					i--;
+				}
+
+			}
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 			for (Stock s : Stock.values()) {
 				s.change();
