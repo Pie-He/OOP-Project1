@@ -25,7 +25,7 @@ public class Manager {
 	 * player.stream().filter(item->(item.getCash()==10000)).findFirst(); }
 	 */
 	final private static SimpleDateFormat SDF = new SimpleDateFormat(
-			"今天是yyyy年MM月dd日");
+			"今天是yyyy年MM月dd日 EE");
 	private Map map = Map.getInstance();
 	static int diceFlag = -1;
 	private Calendar calendar = Calendar.getInstance();
@@ -57,6 +57,11 @@ public class Manager {
 		EVENT: {
 			while (calendar.get(Calendar.YEAR) < 2017) {
 				IO.printString(SDF.format(calendar.getTime()));
+				if (!isWeekend()) {
+					for (Stock s : Stock.values()) {
+						s.change();
+					}
+				}
 				for (int i = 0; i < players.size(); i++) {
 					if (!this.event(players.get(i))) {
 						players.remove(i);
@@ -67,9 +72,6 @@ public class Manager {
 								+ "获胜！！！");
 						break EVENT;
 					}
-				}
-				for (Stock s : Stock.values()) {
-					s.change();
 				}
 				if (this.isMonthLast()) {
 					IO.printString("月底发放储金利息！！！");
@@ -124,8 +126,8 @@ public class Manager {
 				IO.printString(map.getDescription(player.getPrePoi(dis)));
 				break;
 			case 5:
-				IO.printString(Tools.stringCover(16, "Name", "Coupon",
-						"Cash", "Deposit", "House Property", "Total Property"));
+				IO.printString(Tools.stringCover(16, "Name", "Coupon", "Cash",
+						"Deposit", "House Property", "Total Property"));
 				for (Player p : players)
 					IO.printString(p.getMessage());
 				break;
@@ -139,7 +141,11 @@ public class Manager {
 				player.fail();
 				return false;
 			case 8:
-				stockMarket(player);
+				if(isWeekend()){
+					IO.printString("周末休市！！！");
+				}else{
+					stockMarket(player);
+				}
 				break;
 			}
 		}
@@ -170,6 +176,11 @@ public class Manager {
 		return is;
 	}
 
+	private boolean isWeekend() {
+		return calendar.get(Calendar.DAY_OF_WEEK) == 1
+				|| calendar.get(Calendar.DAY_OF_WEEK) == 7;
+	}
+
 	private void stockMarket(Player player) {
 		while (true) {
 			int len = Stock.values().length;
@@ -178,7 +189,7 @@ public class Manager {
 				amount[i] = player.getStockAmount(Stock.values()[i]);
 			}
 			int[] data = IO.getStock(amount);// 0-b or s 1-which stock
-													// 2-amount
+												// 2-amount
 			// 股票判断
 			if (data[0] < 0)
 				return;

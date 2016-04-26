@@ -143,19 +143,6 @@ public class IO {
 		return Integer.parseInt(dice);
 	}
 
-	public static void printString(String str) {
-		System.out.println(str);
-	}
-
-	public static void printStringArray2(String[][] str) {
-		for (int y = 0; y < str[y].length; y++) {
-			for (int x = 0; x < str.length; x++) {
-				System.out.print(str[x][y]);
-			}
-			System.out.println();
-		}
-	}
-
 	public static int[] getStock(int[] amount) {
 		System.out.print(Tools.stringCover(16, "Order Number"));
 		System.out.println(Tools.stringCover(16, "Name", "Price",
@@ -199,6 +186,19 @@ public class IO {
 				continue;
 			}
 			return data;
+		}
+	}
+
+	public static void printString(String str) {
+		System.out.println(str);
+	}
+
+	public static void printStringArray2(String[][] str) {
+		for (int y = 0; y < str[y].length; y++) {
+			for (int x = 0; x < str.length; x++) {
+				System.out.print(str[x][y]);
+			}
+			System.out.println();
 		}
 	}
 
