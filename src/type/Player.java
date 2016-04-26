@@ -18,8 +18,10 @@ public class Player extends Removable {
 	private PriorityQueue<House> houses;
 	private EnumMap<Stock, Integer> stocks = new EnumMap<Stock, Integer>(
 			Stock.class);
+	private boolean valid;
 
 	public Player() {
+		valid = true;
 		this.cash = 5000;
 		this.deposit = 0;
 		this.coupon = 0;
@@ -176,10 +178,6 @@ public class Player extends Removable {
 		return this.houses.poll();
 	}
 
-	public void fail() {
-
-	}
-
 	public boolean isInView(Player p, int range) {
 		if (Math.abs(this.poi - p.poi) <= range
 				|| Math.abs(this.poi - p.poi) >= (Manager.map.mapLength - range))
@@ -204,6 +202,23 @@ public class Player extends Removable {
 
 	public int getStockAmount(Stock s) {
 		return this.stocks.containsKey(s) ? this.stocks.get(s) : 0;
+	}
+
+	public void fail() {
+		House house;
+		while ((house = this.houses.poll()) != null) {
+			house.destroy();
+		}
+		this.cash = 0;
+		this.coupon = 0;
+		this.deposit = 0;
+		this.props.clear();
+		this.name += "(failed)";
+		valid = false;
+	}
+
+	public boolean valid() {
+		return this.valid;
 	}
 	/*
 	 * private class MyArray extends ArrayList<Prop> {

@@ -8,6 +8,15 @@ import util.Output;
 import util.Tools;
 
 public class Manager {
+	private static final Manager MANAGER = new Manager();
+
+	private Manager() {
+	}
+
+	public static Manager getInstance() {
+		return MANAGER;
+	}
+
 	public static LinkedList<Player> players;
 	final private static String[] PLSYMBOL = { "□", "■", "△", "▲" };
 	final private static String[] HSSYMBOL = { "○", "●", "☆", "★" };
@@ -17,7 +26,7 @@ public class Manager {
 	 */
 	final private static SimpleDateFormat SDF = new SimpleDateFormat(
 			"今天是yyyy年MM月dd日");
-	static Map map = new Map(39, 19);
+	static Map map = Map.getInstance();
 	static int diceFlag = -1;
 	private Calendar calendar = Calendar.getInstance();
 
@@ -45,8 +54,10 @@ public class Manager {
 			players.get(1).addProp(Prop.taxInspectionCard);
 		while (calendar.get(Calendar.YEAR) < 2017) {
 			Output.printString(SDF.format(calendar.getTime()));
-			for (int i = 0; i < players.size(); i++)
-				this.event(players.get(i));
+			players.stream().forEach(player -> {
+				if (player.valid())
+					this.event(player);
+			});
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 			for (Stock s : Stock.values()) {
 				s.change();
@@ -61,6 +72,11 @@ public class Manager {
 			}
 		}
 		Output.inputClose();
+	}
+
+	public void fail(Player p) {
+		Output.printString(p.getName() + "失败！");
+		p.fail();
 	}
 
 	private boolean event(Player player) {
@@ -131,10 +147,6 @@ public class Manager {
 
 	private int randomDice() {
 		return (int) (Math.random() * 6) + 1;
-	}
-
-	public static void fail(Player p) {
-
 	}
 
 	private boolean isMonthLast() {

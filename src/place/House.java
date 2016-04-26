@@ -98,6 +98,10 @@ public class House extends Place implements Comparable<House> {
 		}
 	}
 
+	public void destroy() {
+		this.owner = null;
+	}
+
 	private void sell(Player p) {
 		if (!Output.getYesOrNo("ÊÇ·ñÐèÒª¹ºÂò£¿"))
 			return;
@@ -142,7 +146,7 @@ public class House extends Place implements Comparable<House> {
 		while (fee <= 0) {
 			House house = p.sellHouse();
 			if (house == null) {
-				Manager.fail(p);
+				Manager.getInstance().fail(p);
 			}
 			house.owner = null;
 			if ((fee -= house.getPrice()) <= 0) {
