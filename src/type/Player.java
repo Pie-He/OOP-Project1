@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import place.House;
 import util.Tools;
 
-public class Player extends Removable {
+public class Player extends Item {
 	private String name;
 	private int cash;// 玩家现金
 	private int deposit;// 玩家存款
@@ -110,9 +110,7 @@ public class Player extends Removable {
 	public ArrayList<String> propToText() {
 		// StringBuffer str = new StringBuffer();
 		ArrayList<String> strs = new ArrayList<String>(20);
-		for (int i = 0; i < this.props.size(); i++) {
-			strs.add(props.get(i).toText());
-		}
+		this.props.stream().forEach(i -> strs.add(i.toText()));
 		// return str.toString();
 		return strs;
 	}
@@ -137,8 +135,8 @@ public class Player extends Removable {
 	}
 
 	public int walk() {
-		this.poi = (this.poi + this.direction +Map.getInstance().mapLength)
-				%Map.getInstance().mapLength;
+		this.poi = (this.poi + this.direction + Map.getInstance().mapLength)
+				% Map.getInstance().mapLength;
 		return this.poi;
 	}
 

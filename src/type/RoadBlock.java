@@ -1,6 +1,6 @@
 package type;
 
-public class RoadBlock extends Removable{
+public class RoadBlock extends Item{
 	@SuppressWarnings("unused")
 	private String symbol;
 	public RoadBlock(int poi){

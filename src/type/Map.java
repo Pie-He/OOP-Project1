@@ -1,8 +1,8 @@
 package type;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 
 import place.*;
 
@@ -13,19 +13,18 @@ public class Map {
 	private static final Map MAP = new Map();
 
 	private Map() {
-		places = new LinkedList<Place>();
+		places = new ArrayList<Place>();
 		getMapData();
 		mapLength = places.size();
 		this.cells = new Cell[width][height];
 		this.staticMap = new String[width][height];
 	}
-
 	public static Map getInstance() {
 		return MAP;
 	}
 
 	private Cell[][] cells;
-	private LinkedList<Place> places;
+	private ArrayList<Place> places;
 	private String[][] staticMap;
 	private int width;
 	private int height;

@@ -9,7 +9,7 @@ public abstract class Place {
 	private int x;
 	private int y;
 	private String symbol;
-	private LinkedList<Removable> items = new LinkedList<Removable>();
+	private LinkedList<Item> items = new LinkedList<Item>();
 	private String type;
 
 	Place() {
@@ -72,7 +72,7 @@ public abstract class Place {
 		// return symbol;
 	}
 
-	public void put(Removable item) {
+	public void put(Item item) {
 		this.items.addFirst(item);
 	}
 
@@ -86,7 +86,7 @@ public abstract class Place {
 	}
 
 	public boolean removeBlock() {
-		Removable it = this.items.stream()
+		Item it = this.items.stream()
 				.filter(item -> item instanceof RoadBlock).findAny()
 				.orElse(null);
 		return items.remove(it);

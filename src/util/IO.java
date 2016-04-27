@@ -77,7 +77,7 @@ public class IO {
 	public static int getBuyProp() {
 		for (int i = 0; i < Prop.values().length; i++) {
 			System.out.printf("%d-%s  %s\n", i, Prop.values()[i].toText(),
-					+Prop.values()[i].getPrice() + "µãÈ¯");
+					Prop.values()[i].getPrice() + "µãÈ¯");
 		}
 		System.out.println();
 		// String reg = "^[0-" + (Prop.values().length - 1) + "xX]$";

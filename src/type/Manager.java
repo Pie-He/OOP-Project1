@@ -31,15 +31,7 @@ public class Manager {
 	private Calendar calendar = Calendar.getInstance();
 
 	public void start() throws IOException {
-		int playerNum = IO.getPlayerNumber();
-		int index = 0;
-		players = new LinkedList<Player>();
-		for (String name : IO.getPlayerName(playerNum)) {
-			players.add(new Player(name, PLSYMBOL[index], HSSYMBOL[index++]));
-		}
-		calendar.set(2016, 0, 1);
 		// News.news4();
-		IO.getReady();
 		/*
 		 * // Player player = Manager.players.pop(); //Player player = new
 		 * Player(); players.add(player); player.addProp(Prop.averageRichCard);
@@ -47,7 +39,7 @@ public class Manager {
 		 * player.addProp(Prop.averageRichCard);
 		 * player.addProp(Prop.remoteBoson);
 		 */
-		map.init(players);
+		this.init();
 		for (int i = 0; i < 20; i++)
 			players.getFirst().addProp(Prop.remoteBoson);
 		for (int i = 0; i < 20; i++) {
@@ -57,11 +49,14 @@ public class Manager {
 		EVENT: {
 			while (calendar.get(Calendar.YEAR) < 2017) {
 				IO.printString(SDF.format(calendar.getTime()));
+				//判断周末，周末股市休市
 				if (!isWeekend()) {
 					for (Stock s : Stock.values()) {
 						s.change();
 					}
 				}
+				
+				//轮流交换控制权
 				for (int i = 0; i < players.size(); i++) {
 					if (!this.event(players.get(i))) {
 						players.remove(i);
@@ -73,6 +68,8 @@ public class Manager {
 						break EVENT;
 					}
 				}
+				
+				//判断月底？月底银行发放利息
 				if (this.isMonthLast()) {
 					IO.printString("月底发放储金利息！！！");
 					players.stream().forEach(i -> {
@@ -90,6 +87,26 @@ public class Manager {
 	public void fail(Player p) {
 		IO.printString(p.getName() + "失败！");
 		p.fail();
+	}
+
+	private void init() {
+		int playerNum = IO.getPlayerNumber();
+		int index = 0;
+		players = new LinkedList<Player>();
+		for (String name : IO.getPlayerName(playerNum)) {
+			players.add(new Player(name, PLSYMBOL[index], HSSYMBOL[index++]));
+		}
+		calendar.set(2016, 0, 1);
+		map.init(players);
+		while (true) {
+			try {
+				IO.getReady();
+				break;
+			} catch (IOException e) {
+				IO.printString("请准备好");
+				continue;
+			}
+		}
 	}
 
 	private boolean event(Player player) {
@@ -114,8 +131,7 @@ public class Manager {
 						diceFlag = -1;
 						return is;
 					}
-				}
-				break;
+				}				break;
 			case 3:
 				warning(player);
 				break;
@@ -141,9 +157,9 @@ public class Manager {
 				player.fail();
 				return false;
 			case 8:
-				if(isWeekend()){
+				if (isWeekend()) {
 					IO.printString("周末休市！！！");
-				}else{
+				} else {
 					stockMarket(player);
 				}
 				break;
@@ -199,4 +215,5 @@ public class Manager {
 				Stock.values()[data[1]].sellStock(player, data[2]);
 		}
 	}
+	
 }
