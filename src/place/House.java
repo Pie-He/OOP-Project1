@@ -18,17 +18,11 @@ public class House extends Place implements Comparable<House> {
 		this.level = 1;
 	}
 
-	public House(int initialPrice) {
-		this();
-		this.initialPrice = initialPrice;
-	}
-
 	public House(int x, int y, String symbol, int initialPrice, String name) {
 		super(x, y, symbol, "·¿²ú");
 		this.name = name;
 		this.initialPrice = initialPrice;
 		this.level = 1;
-		// this.street=street;
 	}
 
 	@Override

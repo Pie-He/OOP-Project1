@@ -17,46 +17,32 @@ public class Manager {
 		return MANAGER;
 	}
 
-	public static LinkedList<Player> players;
-	final private static String[] PLSYMBOL = { "□", "■", "△", "▲" };
-	final private static String[] HSSYMBOL = { "○", "●", "☆", "★" };
-	/*
-	 * static{
-	 * player.stream().filter(item->(item.getCash()==10000)).findFirst(); }
-	 */
+	final private static String[] PLSYMBOL = { "□", "○", "△", "☆" };
+	final private static String[] HSSYMBOL = { "■", "●", "▲", "★" };
 	final private static SimpleDateFormat SDF = new SimpleDateFormat(
 			"今天是yyyy年MM月dd日 EE");
 	private Map map = Map.getInstance();
-	static int diceFlag = -1;
 	private Calendar calendar = Calendar.getInstance();
+	static int diceFlag = -1;
+	public static LinkedList<Player> players;
 
 	public void start() throws IOException {
-		// News.news4();
-		/*
-		 * // Player player = Manager.players.pop(); //Player player = new
-		 * Player(); players.add(player); player.addProp(Prop.averageRichCard);
-		 * player.addProp(Prop.averageRichCard);
-		 * player.addProp(Prop.averageRichCard);
-		 * player.addProp(Prop.remoteBoson);
-		 */
 		this.init();
-		for (int i = 0; i < 20; i++)
-			players.getFirst().addProp(Prop.remoteBoson);
-		for (int i = 0; i < 20; i++) {
-			players.get(1).addProp(Prop.remoteBoson);
-			players.get(1).addProp(Prop.stopCard);
-		}
+		/*
+		 * for (int i = 0; i < 20; i++)
+		 * players.getFirst().addProp(Prop.remoteBoson); for (int i = 0; i < 20;
+		 * i++) { players.get(1).addProp(Prop.remoteBoson);
+		 * players.get(1).addProp(Prop.stopCard); }
+		 */
 		EVENT: {
 			while (calendar.get(Calendar.YEAR) < 2017) {
 				IO.printString(SDF.format(calendar.getTime()));
-				//判断周末，周末股市休市
-				if (!isWeekend()) {
-					for (Stock s : Stock.values()) {
-						s.change();
-					}
-				}
-				
-				//轮流交换控制权
+
+				// 判断周末，周末股市休市
+				if (!isWeekend())
+					Stock.changes();
+
+				// 轮流交换控制权
 				for (int i = 0; i < players.size(); i++) {
 					if (!this.event(players.get(i))) {
 						players.remove(i);
@@ -68,8 +54,8 @@ public class Manager {
 						break EVENT;
 					}
 				}
-				
-				//判断月底？月底银行发放利息
+
+				// 判断月底？月底银行发放利息
 				if (this.isMonthLast()) {
 					IO.printString("月底发放储金利息！！！");
 					players.stream().forEach(i -> {
@@ -90,8 +76,8 @@ public class Manager {
 	}
 
 	private void init() {
-		int playerNum = IO.getPlayerNumber();
 		int index = 0;
+		int playerNum = IO.getPlayerNumber();
 		players = new LinkedList<Player>();
 		for (String name : IO.getPlayerName(playerNum)) {
 			players.add(new Player(name, PLSYMBOL[index], HSSYMBOL[index++]));
@@ -131,7 +117,8 @@ public class Manager {
 						diceFlag = -1;
 						return is;
 					}
-				}				break;
+				}
+				break;
 			case 3:
 				warning(player);
 				break;
@@ -148,11 +135,8 @@ public class Manager {
 					IO.printString(p.getMessage());
 				break;
 			case 6:
-				int dice = this.randomDice();
-				IO.printString("投掷点数:" + dice);
-				boolean is = map.event(player, dice);
-				IO.printStringArray2(map.toText());
-				return is;
+
+				return this.Dice(player);
 			case 7:
 				player.fail();
 				return false;
@@ -178,8 +162,12 @@ public class Manager {
 			IO.printString("前方无路障");
 	}
 
-	private int randomDice() {
-		return (int) (Math.random() * 6) + 1;
+	private boolean Dice(Player player) {
+		int dice = (int) (Math.random() * 6) + 1;
+		IO.printString("投掷点数:" + dice);
+		boolean is = map.event(player, dice);
+		IO.printStringArray2(map.toText());
+		return is;
 	}
 
 	private boolean isMonthLast() {
@@ -215,5 +203,5 @@ public class Manager {
 				Stock.values()[data[1]].sellStock(player, data[2]);
 		}
 	}
-	
+
 }

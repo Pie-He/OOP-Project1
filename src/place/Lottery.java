@@ -18,7 +18,7 @@ public class Lottery extends Place {
 		if (!IO.getYesOrNo("是否要支付2000元买彩票")) {
 			return true;
 		}
-		if (p.addCash(-2000)) {
+		if (!p.addCash(-2000)) {
 			IO.printString("现金不足");
 			return true;
 		}

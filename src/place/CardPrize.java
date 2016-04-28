@@ -17,7 +17,7 @@ public class CardPrize extends Place {
 		super.event(p);
 		int random = (int) (Math.random() * Prop.values().length);
 		Prop prop = Prop.values()[random];
-		IO.printString("恭喜！获得“" + prop + "”1个！");
+		IO.printString("恭喜！获得“" + prop.toText() + "”1个！");
 		p.addProp(prop);
 		return true;
 	}

@@ -20,12 +20,11 @@ public class News extends Place {
 
 	@Override
 	public boolean event(Player p) {
-		// TODO Auto-generated method stub
 		super.event(p);
 		int random = (int) (Math.random() * 5);// 获得0~4随机数
 		switch (random) {
 		case 0: {
-			news(0);
+			news4();
 			break;
 		}
 		case 1: {
@@ -33,8 +32,8 @@ public class News extends Place {
 			break;
 		}
 		case 2: {
-			Manager.players.stream()
-					.map(i -> i.addDeposit(i.getDeposit() / 10));
+			Manager.players.stream().forEach(
+					i -> i.addDeposit(i.getDeposit() / 10));
 			IO.printString("银行加发储金红利每个人得到存款10%");
 			break;
 		}
@@ -53,28 +52,20 @@ public class News extends Place {
 	}
 
 	private void news4() {
-		// TODO Auto-generated method stub
 		IO.printString("每个人得到一张卡片");
 		Manager.players.stream().forEach(
 				i -> {
 					int random = (int) (Math.random() * Prop.values().length);
 					Prop prop = Prop.values()[random];
 					i.addProp(prop);
-					IO.printString("恭喜！" + i.getName() + "获得“"
-							+ prop.toText() + "”1个！");
+					IO.printString("恭喜！" + i.getName() + "获得“" + prop.toText()
+							+ "”1个！");
 				});
 	}
 
 	private void news(int choice) {
 		int rewards = ((int) (Math.random() * 10 + 1)) * 1000;
 		Deque<Player> pls = new LinkedList<Player>();
-		/*
-		 * int max = 0; for (Player player : Manager.players) { if
-		 * (player.getHouseAmount() < max) continue; if (player.getHouseAmount()
-		 * > max) { pls.clear(); } pls.add(player); }
-		 * 
-		 * pls.stream().forEach(i -> i.addCash(rewards));
-		 */
 
 		IntSummaryStatistics stats = Manager.players.stream()
 				.mapToInt((x) -> x.getHouseAmount()).summaryStatistics();

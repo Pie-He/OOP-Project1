@@ -20,7 +20,7 @@ public class Player extends Item {
 			Stock.class);
 
 	public Player() {
-		this.cash = 800;
+		this.cash = 20000;
 		this.deposit = 0;
 		this.coupon = 0;
 		this.props = new ArrayList<Prop>(20);

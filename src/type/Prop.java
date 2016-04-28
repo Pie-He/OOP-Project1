@@ -7,7 +7,7 @@ import util.IO;
 public enum Prop {
 	roadBlock("Â·ÕÏ", 15), remoteBoson("Ò£¿Ø÷»×Ó", 30), reverseCard("×ªÏò¿¨", 15), stopCard(
 			"ÖÍÁô¿¨", 20), taxInspectionCard("²éË°¿¨", 20), averageRichCard("¾ù¸»¿¨", 80), plunderCard(
-			"ÂÓ¶á¿¨", 30);
+			"ÂÓ¶á¿¨", 20);
 	private String name;
 	private int price;
 
@@ -62,7 +62,7 @@ public enum Prop {
 		int all = Manager.players.stream().mapToInt(i -> i.getCash()).sum();
 		Manager.players.stream().forEach(
 				i -> i.setCash(all / Manager.players.size()));
-		return false;
+		return true;
 	}
 
 	private boolean useTaxInspectionCard(Player p) {

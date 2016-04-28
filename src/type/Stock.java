@@ -35,12 +35,17 @@ public enum Stock {
 		this.riseAllFall = riseAllFall;
 	}
 
-	public void change() {
+	private void change() {
 		int tmp = (int) (Math.random() * 2001) - 1000;
 		this.riseAllFall = (double) tmp / 10000;
 		price = (int) (price * (1 + this.riseAllFall));
 	}
 
+	public static void changes(){
+		for(Stock s:values()){
+			s.change();
+		}
+	}
 	public String getDescription() {
 		String ra = new java.text.DecimalFormat("0.00%")
 				.format(this.riseAllFall);
@@ -55,8 +60,8 @@ public enum Stock {
 			return;
 		}
 		total -= player.getDeposit();
-		player.setDeposit(0);
 		if (player.addCash(-total)) {
+			player.setDeposit(0);
 			player.addStock(this, amount);
 			return;
 		}
