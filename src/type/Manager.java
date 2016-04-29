@@ -10,6 +10,7 @@ import util.IO;
 import util.Tools;
 
 public class Manager {
+	/*µ¥ÀıÄ£Ê½*/
 	private static final Manager MANAGER = new Manager();
 
 	private Manager() {

@@ -7,11 +7,14 @@ import java.util.Collection;
 import type.item.Player;
 import type.item.RoadBlock;
 import type.place.*;
+import util.Const;
+import util.IO;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 public class Map {
+	/*µ¥ÀýÄ£Ê½*/
 	private static final Map MAP = new Map();
 
 	private Map() {
@@ -100,6 +103,7 @@ public class Map {
 		int poi = p.walk();
 		places.get(poi).put(p);
 		if (places.get(poi).removeBlock()) {
+			IO.printString(Const.BLOCK_YES);
 			places.get(poi).event(p);
 			return false;
 		}

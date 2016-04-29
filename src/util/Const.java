@@ -39,7 +39,7 @@ public enum Const {
 	//block
 	BLOCK_NO("前方无路障！"),
 	BLOCK_EXSITED("该位置已放置路障"),
-	
+	BLOCK_YES("遭遇路障！"),
 	//search
 	SEARCH("请输入您想查询的点与您相差的步数(后方用负数表示，x-退出)"),
 	
