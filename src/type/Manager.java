@@ -30,12 +30,21 @@ public class Manager {
 
 	public void start() throws IOException {
 		this.init();
-		/*
-		 * for (int i = 0; i < 20; i++)
-		 * players.getFirst().addProp(Prop.remoteBoson); for (int i = 0; i < 20;
-		 * i++) { players.get(1).addProp(Prop.remoteBoson);
-		 * players.get(1).addProp(Prop.stopCard); }
-		 */
+
+		// for (int i = 0; i < 20; i++) {
+		// players.getFirst().addProp(Prop.remoteBoson);
+/*		for (int j = 0; j < Prop.values().length; j++) {
+			players.getFirst().addProp(Prop.values()[j]);
+			players.getFirst().addProp(Prop.values()[j]);
+			players.getFirst().addProp(Prop.values()[j]);
+
+		}
+		// }
+		for (int i = 0; i < 20; i++) {
+			players.get(1).addProp(Prop.remoteBoson);
+			players.get(1).addProp(Prop.stopCard);
+		}*/
+		//IO.printString(SDF.format(calendar.getTime()));
 		EVENT: {
 			while (calendar.get(Calendar.YEAR) < 2017) {
 				IO.printString(SDF.format(calendar.getTime()));
@@ -69,14 +78,20 @@ public class Manager {
 				calendar.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
+		int max = Manager.players.stream().mapToInt((x) -> x.getProperty())
+				.summaryStatistics().getMax();
+		players.stream().filter(i -> i.getProperty() == max)
+				.forEach(i -> IO.printString(i.getName() + Const.WIN));
 		IO.inputClose();
 	}
 
 	public void fail(Player p) {
 		IO.printString(p.getName() + Const.FAIL);
 		p.fail();
+		map.removePlayer(p);
 	}
 
+	/* 初始化 */
 	private void init() {
 		int index = 0;
 		int playerNum = IO.getPlayerNumber();
@@ -97,6 +112,7 @@ public class Manager {
 		}
 	}
 
+	/* 触发事件 */
 	private boolean event(Player player) {
 		IO.printString("现在是玩家\"" + player.getName() + "\"操作时间，您的前进方向是"
 				+ ((player.getDirection() > 0) ? "顺时针" : "逆时针"));
@@ -125,9 +141,8 @@ public class Manager {
 				warning(player);
 				break;
 			case 4:
-				int dis = IO.getDistanceChoice(
-						Const.SEARCH.toString(), -map.mapLength,
-						map.mapLength);
+				int dis = IO.getDistanceChoice(Const.SEARCH.toString(),
+						-map.mapLength, map.mapLength);
 				IO.printString(map.getDescription(player.getPrePoi(dis)));
 				break;
 			case 5:
@@ -189,6 +204,8 @@ public class Manager {
 
 	private void stockMarket(Player player) {
 		while (true) {
+			IO.printString("您的现金:" + player.getCash() + " 您的银行存款:"
+					+ player.getDeposit());
 			int len = Stock.values().length;
 			int[] amount = new int[len];
 			for (int i = 0; i < len; i++) {

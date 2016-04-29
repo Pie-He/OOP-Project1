@@ -85,6 +85,7 @@ public class House extends Place implements Comparable<House> {
 	@Override
 	public boolean event(Player p) {
 		super.event(p);
+		IO.printString("持有现金："+p.getCash());
 		if (this.owner == null) {
 			this.sell(p);
 		} else if (this.owner == p) {

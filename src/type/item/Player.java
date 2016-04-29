@@ -125,16 +125,12 @@ public class Player extends Item {
 	public String getMessage() {
 		String str = Tools.stringCover(16, this.name, this.coupon + "",
 				this.cash + "", this.deposit + "",
-				this.getHouseProperty() + "",
-				(this.getCash() + this.getDeposit() + this.getHouseProperty())
-						+ "");
-		/*
-		 * String str = this.getName() + "\t\t" + this.getCoupon() + "\t\t" +
-		 * this.getCash() + "\t\t" + this.getDeposit() + "\t\t" +
-		 * this.getHouseProperty() + "\t\t" + (this.getCash() +
-		 * this.getDeposit() + this.getHouseProperty());
-		 */
+				this.getHouseProperty() + "", this.getProperty() + "");
 		return str;
+	}
+
+	public int getProperty() {
+		return this.getCash() + this.getDeposit() + this.getHouseProperty();
 	}
 
 	public int walk() {

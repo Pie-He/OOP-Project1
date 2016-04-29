@@ -96,10 +96,6 @@ public class Map {
 	// 如果能继续移动返回true，否则返回false,当超越其他玩家时，图标覆盖问题
 	private boolean movePlayer(Player p) {
 		int poi0 = p.getPoi();
-		if (places.get(poi0).removeBlock()) {
-			places.get(poi0).event(p);
-			return false;
-		}
 		places.get(poi0).remove(p);
 		int poi = p.walk();
 		places.get(poi).put(p);
@@ -125,7 +121,6 @@ public class Map {
 					width = width > place.getX() + 1 ? width : place.getX() + 1;
 					height = height > place.getY() + 1 ? height
 							: place.getY() + 1;
-					// System.out.print(place.getDescription());
 				}
 				br.close();
 			} catch (IOException e) {
