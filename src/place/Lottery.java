@@ -1,6 +1,7 @@
 package place;
 
 import type.Player;
+import util.Const;
 import util.IO;
 
 public class Lottery extends Place {
@@ -15,11 +16,11 @@ public class Lottery extends Place {
 	@Override
 	public boolean event(Player p) {
 		super.event(p);
-		if (!IO.getYesOrNo("是否要支付2000元买彩票")) {
+		if (!IO.getYesOrNo(Const.LOTTERY_BUT_OR_NOT)) {
 			return true;
 		}
 		if (!p.addCash(-2000)) {
-			IO.printString("现金不足");
+			IO.printString(Const.CASH_NOT_ENOUGH);
 			return true;
 		}
 		int random = (int) (Math.random() * 10 + 1);
@@ -32,7 +33,7 @@ public class Lottery extends Place {
 			lottery = 2000;
 		else
 			lottery = 1000;
-		IO.printString("恭喜！彩票中奖 " + lottery + "元！");
+		IO.printString(Const.LOTTERY_SUCCESS.toString() + lottery);
 		p.addCash(lottery);
 		return true;
 	}

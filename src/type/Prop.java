@@ -2,6 +2,7 @@ package type;
 
 import java.util.LinkedList;
 
+import util.Const;
 import util.IO;
 
 public enum Prop {
@@ -46,7 +47,7 @@ public enum Prop {
 		if ((aim = getChoosePlayer(p, 5, false)) == null)
 			return false;
 		if (aim.getpropNum() <= 0) {
-			IO.printString(aim.getName() + "无道具！！！");
+			IO.printString(aim.getName() + Const.PROP_NO_PROP);
 			return false;
 		}
 		int random = (int) (Math.random() * aim.getpropNum());
@@ -58,7 +59,7 @@ public enum Prop {
 	}
 
 	private boolean useAverageRichCard(Player p) {
-		IO.printString("所有人现金平分使用");
+		IO.printString(Const.PROP_AVERAGE);
 		int all = Manager.players.stream().mapToInt(i -> i.getCash()).sum();
 		Manager.players.stream().forEach(
 				i -> i.setCash(all / Manager.players.size()));
@@ -69,7 +70,7 @@ public enum Prop {
 		Player aim;
 		if ((aim = getChoosePlayer(p, 5, false)) == null)
 			return false;
-		IO.printString(aim.getName() + "缴交30%存款");
+		IO.printString(aim.getName() + Const.PROP_DEPO_FINE);
 		aim.addDeposit(-aim.getDeposit() * 3 / 10);
 		return true;
 	}
@@ -97,12 +98,12 @@ public enum Prop {
 	}
 
 	private boolean useRoadBlock(Player p) {
-		int dis = IO.getDistanceChoice("请输入前后方8格内的数字(负数表示后方,x-取消)", -8, 8);
+		int dis = IO.getDistanceChoice(Const.PROP_CHOOSE.toString(), -8, 8);
 		if (dis > 8)
 			return false;
 		int poi = p.getPrePoi(dis);
 		if (!Map.getInstance().addBlock(new RoadBlock(poi))) {
-			IO.printString("该位置已放置路障");
+			IO.printString(Const.BLOCK_EXSITED);
 			return false;
 		}
 		return true;

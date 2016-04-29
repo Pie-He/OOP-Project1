@@ -2,11 +2,13 @@ package place;
 
 import type.Manager;
 import type.Player;
+import util.Const;
 import util.IO;
 
 public class House extends Place implements Comparable<House> {
 	// private int price;
-	private static final int MAXLEVEL = 5;
+
+	final private static int MAXLEVEL = 5;
 	private int initialPrice;
 	private int level;
 	private String name;
@@ -76,7 +78,7 @@ public class House extends Place implements Comparable<House> {
 		return super.getDescription() + "\n" + "名称:" + name + "\n" + "初始价格:"
 				+ this.initialPrice + "元" + "\n" + "当前等级:" + this.level + "级"
 				+ "\n" + "拥有者:"
-				+ (this.owner == null ? "(可供出售状态)" : this.owner.getName())
+				+ (this.owner == null ? Const.HOUSE_NOT_OWNER : this.owner.getName())
 				+ "\n";
 	}
 
@@ -98,30 +100,30 @@ public class House extends Place implements Comparable<House> {
 	}
 
 	private void sell(Player p) {
-		if (!IO.getYesOrNo("是否需要购买？"))
+		if (!IO.getYesOrNo(Const.BUY_OR_NOT))
 			return;
 		if (!p.addCash(-this.getPrice())) {
-			IO.printString("现金不足！！！");
+			IO.printString(Const.CASH_NOT_ENOUGH);
 			return;
 		}
 		p.addHouse(this);
 		this.owner = p;
-		IO.printString("购地成功！！！");
+		IO.printString(Const.SUCCESS);
 	}
 
 	private void levelUp() {
 		if (this.level >= MAXLEVEL) {
-			IO.printString("已最高级！！！");
+			IO.printString(Const.HOUSE_MAX_LEVEL);
 			return;
 		}
-		if (!IO.getYesOrNo("是否需要升级？"))
+		if (!IO.getYesOrNo(Const.HOUSE_LEVELUP_OR_NOT))
 			return;
 		if (!owner.addCash(-this.initialPrice / 2)) {
-			IO.printString("现金不足！！！");
+			IO.printString(Const.CASH_NOT_ENOUGH);
 			return;
 		}
 		this.level++;
-		IO.printString("升级成功！！！");
+		IO.printString(Const.SUCCESS);
 	}
 
 	private boolean charge(Player p) {
@@ -130,12 +132,12 @@ public class House extends Place implements Comparable<House> {
 		owner.addCash(fee);
 		if (p.addCash(-fee))
 			return true;
-		IO.printString("现金不足，银行存款抵扣！");
+		IO.printString(Const.HOUSE_CASH_NOT_ENOUGH);
 		fee -= p.getCash();
 		p.setCash(0);
 		if (p.addDeposit(-fee))
 			return true;
-		IO.printString("银行存款不足，变卖土地抵扣！");
+		IO.printString(Const.HOUSE_DEPO_NOT_ENOUGH);
 		fee -= p.getDeposit();
 		p.setDeposit(0);
 		while (fee > 0) {

@@ -2,6 +2,7 @@ package place;
 
 import type.Player;
 import type.Prop;
+import util.Const;
 import util.IO;
 
 public class Shop extends Place{
@@ -23,7 +24,7 @@ public class Shop extends Place{
 			if(p.addCoupon(-prop.getPrice()))
 				p.addProp(prop);
 			else
-				IO.printString("µãÈ¯²»×ã");
+				IO.printString(Const.COUPON_NOT_ENOUGH);
 		}		
 		return true;
 	}

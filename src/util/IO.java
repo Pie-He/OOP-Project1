@@ -120,16 +120,13 @@ public class IO {
 		return getDistanceChoice("请输入玩家编号(x-取消)", 0, l.size() - 1);
 	}
 
-	public static boolean getYesOrNo(String str) {
-		return getAndCheck(str + "(0-取消	1-确定)", 0, 1) == 1;
+	public static boolean getYesOrNo(Const houseLevelupOrNot) {
+		return getAndCheck(houseLevelupOrNot + "(0-取消	1-确定)", 0, 1) == 1;
 		// return Integer.parseInt(getAndCheck(str + "(0-取消	1-确定)", "^[0-1]$"))
 		// == 1;
 	}
 
 	public static int getDistanceChoice(String str, int lb, int ub) {
-		// "(\\-1[0-2]|\\-[1-9])|[0-9]|1[0-2]"
-		// String reg = "\\-[1-8]|[0-8]";
-		// String rs = getAndCheck("请输入前后方8格内的数字(负数表示逆时针方向)", reg);
 		String rs = getAndCheck(str, lb, ub, "x");
 		if (rs.equals("x"))
 			return ub + 1;
@@ -191,6 +188,10 @@ public class IO {
 
 	public static void printString(String str) {
 		System.out.println(str);
+	}
+
+	public static void printString(Object o) {
+		System.out.println(o);
 	}
 
 	public static void printStringArray2(String[][] str) {

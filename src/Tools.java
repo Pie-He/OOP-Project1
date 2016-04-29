@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import type.Manager;
 import type.Player;
 import type.Prop;
+import util.Const;
 import util.IO;
 import place.*;
 
@@ -19,33 +20,7 @@ import com.alibaba.fastjson.*;
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-	/*	LinkedList<Player> l=new LinkedList<Player>();
-		l.add(new Player());
-		l.add(new Player());
-		l.add(new Player());
-		l.add(new Player());
-		Calendar c=Calendar.getInstance();
-		c.set(2016, 0, 31);
-		//c.add(0, 1);
-		SimpleDateFormat sdf = new SimpleDateFormat("今天是yyyy年MM月dd日");
-		//c.add(Calendar.DATE, 1);
-		c.add(Calendar.DAY_OF_MONTH, 1);
-       // c.set(Calendar.DATE, (c.get(Calendar.DATE) + 1)); 
-        
-        boolean is=false;
-        if (c.get(Calendar.DAY_OF_MONTH) == 1) { 
-            is= true; 
-        } 
-		System.out.println(is);
-		System.out.println(sdf.format(c.getTime()));
-		//for(int i=0;i<l.size();i++)*/
-		String inputStr="s      dd    dd daf    ";
-		String s ="a b c";
-		inputStr.replace(" ", "");
-		String[] strs=inputStr.split(" +");
-		for(String st:strs){
-			System.out.println(st);
-		}
+		System.out.print(Const.CASH_NOT_ENOUGH);
 		// writeMap();
 		/*
 		 * Player t = new Player("hpj", "人", "地"); String str =

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import util.Const;
 import util.IO;
 import util.Tools;
 
@@ -49,18 +50,18 @@ public class Manager {
 						i--;
 					}
 					if (players.size() == 1) {
-						IO.printString("游戏结束，" + players.peek().getName()
-								+ "获胜！！！");
+						IO.printString(Const.GAME_OVER
+								+ players.peek().getName() + Const.WIN);
 						break EVENT;
 					}
 				}
 
 				// 判断月底？月底银行发放利息
 				if (this.isMonthLast()) {
-					IO.printString("月底发放储金利息！！！");
+					IO.printString(Const.TIME_DEPO_PRIZE);
 					players.stream().forEach(i -> {
 						int m = i.getDeposit() / 10;
-						IO.printString(i.getName() + "获得利息" + m);
+						IO.printString(i.getName() + Const.TIME_INTERESTS + m);
 						i.addDeposit(m);
 					});
 				}
@@ -71,7 +72,7 @@ public class Manager {
 	}
 
 	public void fail(Player p) {
-		IO.printString(p.getName() + "失败！");
+		IO.printString(p.getName() + Const.FAIL);
 		p.fail();
 	}
 
@@ -89,7 +90,7 @@ public class Manager {
 				IO.getReady();
 				break;
 			} catch (IOException e) {
-				IO.printString("请准备好");
+				IO.printString(Const.READY);
 				continue;
 			}
 		}
@@ -124,7 +125,7 @@ public class Manager {
 				break;
 			case 4:
 				int dis = IO.getDistanceChoice(
-						"请输入您想查询的点与您相差的步数(后方用负数表示，x-退出)", -map.mapLength,
+						Const.SEARCH.toString(), -map.mapLength,
 						map.mapLength);
 				IO.printString(map.getDescription(player.getPrePoi(dis)));
 				break;
@@ -142,7 +143,7 @@ public class Manager {
 				return false;
 			case 8:
 				if (isWeekend()) {
-					IO.printString("周末休市！！！");
+					IO.printString(Const.TIME_BANK_CLOSE);
 				} else {
 					stockMarket(player);
 				}
@@ -159,7 +160,7 @@ public class Manager {
 		}
 		l.stream().forEach(i -> IO.printString("前方" + i + "步有路障！！！"));
 		if (l.size() == 0)
-			IO.printString("前方无路障");
+			IO.printString(Const.BLOCK_NO);
 	}
 
 	private boolean Dice(Player player) {

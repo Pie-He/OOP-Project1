@@ -4,6 +4,7 @@ import type.Player;
 import util.*;
 
 public class Bank extends Place {
+
 	public Bank() {
 
 	}
@@ -20,14 +21,14 @@ public class Bank extends Place {
 		if (money == 0)
 			return true;
 		if (!p.addCash(-money)) {
-			IO.printString("现金不足");
+			IO.printString(Const.CASH_NOT_ENOUGH);
 			return true;
 		}
 		if (!p.addDeposit(money)) {
-			IO.printString("存款余额不足");
+			IO.printString(Const.DEPO_NOT_ENOUGH);
 			return true;
 		}
-		IO.printString("存/取款成功");
+		IO.printString(Const.SUCCESS);
 		return true;
 	}
 

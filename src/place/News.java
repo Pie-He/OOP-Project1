@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import type.Manager;
 import type.Player;
 import type.Prop;
+import util.Const;
 import util.IO;
 
 public class News extends Place {
@@ -34,13 +35,13 @@ public class News extends Place {
 		case 2: {
 			Manager.players.stream().forEach(
 					i -> i.addDeposit(i.getDeposit() / 10));
-			IO.printString("银行加发储金红利每个人得到存款10%");
+			IO.printString(Const.NEWS_DEPO_PRIZE);
 			break;
 		}
 		case 3: {
 			Manager.players.stream().map(
 					i -> i.addDeposit(-i.getDeposit() / 10));
-			IO.printString("所有人缴纳财产税10%");
+			IO.printString(Const.NEWS_DEPO_FINE);
 			break;
 		}
 		case 4: {
@@ -52,7 +53,7 @@ public class News extends Place {
 	}
 
 	private void news4() {
-		IO.printString("每个人得到一张卡片");
+		IO.printString(Const.NEWS_CARD_PRIZE);
 		Manager.players.stream().forEach(
 				i -> {
 					int random = (int) (Math.random() * Prop.values().length);
@@ -71,13 +72,14 @@ public class News extends Place {
 				.mapToInt((x) -> x.getHouseAmount()).summaryStatistics();
 
 		int tmp = choice == 0 ? stats.getMax() : stats.getMin();
-		String str = choice == 0 ? "公开表扬第一地主 " : "公开补助土地最少者 ";
+		String str = choice == 0 ? Const.NEWS_MAXHOUSE.toString()
+				: Const.NEWS_MINHOUSE.toString();
 
 		Manager.players.stream().filter(i -> i.getHouseAmount() == tmp)
 				.forEach(pls::add);
 		IO.printString(str
 				+ pls.stream().map(i -> i.getName())
 						.reduce((x, y) -> x += (" " + y + " ")).get() + "奖励"
-				+ rewards + "元");
+				+ rewards);
 	}
 }
