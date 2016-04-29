@@ -1,34 +1,12 @@
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.IntSummaryStatistics;
-import java.util.LinkedList;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import type.Manager;
-import type.Player;
-import type.Prop;
-import util.Const;
-import util.IO;
-import place.*;
+import type.place.*;
 
 import com.alibaba.fastjson.*;
 
 public class Tools {
 
 	public static void main(String[] args) throws IOException {
-		System.out.print(Const.CASH_NOT_ENOUGH);
-		// writeMap();
-		/*
-		 * Player t = new Player("hpj", "»À", "µÿ"); String str =
-		 * JSON.toJSON(t).toString(); JSONObject jo = JSON.parseObject(str);
-		 * Player a = JSON.toJavaObject(jo, Player.class);
-		 * System.out.print((int) jo.get("cash"));
-		 */
-		//Output.getAndCheck(-34, 3);
+		writeMap();
 	}
 
 	public static void writeMap() throws IOException {

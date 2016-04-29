@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import place.*;
+import type.item.Player;
+import type.item.RoadBlock;
+import type.place.*;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -140,16 +142,6 @@ public class Map {
 			}
 		}
 		return null;
-		/*
-		 * switch (symbol) { case "¡ò": return JSON.toJavaObject(jo,
-		 * House.class); case "È¯": return JSON.toJavaObject(jo, Coupon.class);
-		 * case "µÀ": return JSON.toJavaObject(jo, Shop.class); case "ÐÂ": return
-		 * JSON.toJavaObject(jo, News.class); case "Òø": return
-		 * JSON.toJavaObject(jo, Bank.class); case "²Ê": return
-		 * JSON.toJavaObject(jo, Lottery.class); case "¿Õ": return
-		 * JSON.toJavaObject(jo, Space.class); case "¿¨": return
-		 * JSON.toJavaObject(jo, CardPrize.class); default: return null; }
-		 */
 	}
 
 	private class Cell {

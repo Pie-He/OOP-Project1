@@ -1,9 +1,12 @@
-package type;
+package type.item;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import place.House;
+import type.Map;
+import type.Prop;
+import type.Stock;
+import type.place.House;
 import util.Tools;
 
 public class Player extends Item {

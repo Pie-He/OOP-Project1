@@ -1,8 +1,8 @@
-package place;
+package type.place;
 
 import java.util.*;
 
-import type.*;
+import type.item.*;
 import util.IO;
 
 public abstract class Place {

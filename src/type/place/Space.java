@@ -1,6 +1,6 @@
-package place;
+package type.place;
 
-import type.Player;
+import type.item.Player;
 
 public class Space extends Place {
 	public Space() {

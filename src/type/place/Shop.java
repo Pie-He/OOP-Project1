@@ -1,7 +1,7 @@
-package place;
+package type.place;
 
-import type.Player;
 import type.Prop;
+import type.item.Player;
 import util.Const;
 import util.IO;
 

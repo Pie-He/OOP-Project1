@@ -1,12 +1,12 @@
-package place;
+package type.place;
 
 import java.util.Deque;
 import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
 
 import type.Manager;
-import type.Player;
 import type.Prop;
+import type.item.Player;
 import util.Const;
 import util.IO;
 

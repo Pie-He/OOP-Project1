@@ -1,4 +1,4 @@
-package type;
+package type.item;
 
 public class Item {
 	private String symbol;

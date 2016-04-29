@@ -1,6 +1,7 @@
-package place;
+package type.place;
 
 import type.*;
+import type.item.Player;
 import util.IO;
 
 public class CardPrize extends Place {

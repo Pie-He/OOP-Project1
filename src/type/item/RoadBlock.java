@@ -1,4 +1,5 @@
-package type;
+package type.item;
+
 
 public class RoadBlock extends Item{
 	@SuppressWarnings("unused")

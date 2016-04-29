@@ -2,6 +2,8 @@ package type;
 
 import java.util.LinkedList;
 
+import type.item.Player;
+import type.item.RoadBlock;
 import util.Const;
 import util.IO;
 

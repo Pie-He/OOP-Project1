@@ -1,6 +1,6 @@
 package type;
 
-import place.*;
+import type.place.*;
 public enum PlaceEnum {
 	HOUSE(House.class, "¡ò"), COUPON(Coupon.class, "È¯"), BANK(Bank.class, "Òø"), CARDPRIZE(
 			CardPrize.class, "¿¨"), LOTTERY(Lottery.class, "²Ê"), NEWS(
