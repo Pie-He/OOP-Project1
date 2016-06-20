@@ -24,8 +24,8 @@ public class Player extends Item {
 
 	public Player() {
 		this.cash = 20000;
-		this.deposit = 0;
-		this.coupon = 0;
+		this.deposit = 5000;
+		this.coupon = 1000;
 		this.props = new ArrayList<Prop>(20);
 		this.direction = 1;
 		this.setPoi(0);

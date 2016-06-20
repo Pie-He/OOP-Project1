@@ -34,14 +34,12 @@ public class Manager {
 
 		// for (int i = 0; i < 20; i++) {
 		// players.getFirst().addProp(Prop.remoteBoson);
-/*		for (int j = 0; j < Prop.values().length; j++) {
-			players.getFirst().addProp(Prop.values()[j]);
-			players.getFirst().addProp(Prop.values()[j]);
-			players.getFirst().addProp(Prop.values()[j]);
+		for (int j = 0; j < Prop.values().length; j++) {
+			players.get(0).addProp(Prop.values()[j]);
 
 		}
 		// }
-		for (int i = 0; i < 20; i++) {
+	/*	for (int i = 0; i < 20; i++) {
 			players.get(1).addProp(Prop.remoteBoson);
 			players.get(1).addProp(Prop.stopCard);
 		}*/
@@ -100,7 +98,7 @@ public class Manager {
 		for (String name : IO.getPlayerName(playerNum)) {
 			players.add(new Player(name, PLSYMBOL[index], HSSYMBOL[index++]));
 		}
-		calendar.set(2016, 0, 1);
+		calendar.set(2016, 11, 30);
 		map.init(players);
 		while (true) {
 			try {
